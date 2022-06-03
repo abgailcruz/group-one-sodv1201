@@ -1,0 +1,56 @@
+@mixin size-wiew {
+	width: 1000px;
+	margin: auto;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	// border-style: dotted;
+	border-color: rgba(135, 135, 135, 0.5);
+	padding: 20px;
+}
+
+@mixin title {
+	font-family: $principal-font;
+	font-size: 40px;
+	color: $primary-color;
+}
+
+@mixin banner {
+	width: 100%;
+}
+
+@mixin subtitle {
+	font-family: $principal-font;
+	font-size: 30px;
+}
+
+@mixin paragraph {
+	font-family: $secondary-font;
+	font-size: 16px;
+}
+
+@mixin two-columns {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 100px;
+}
+
+@mixin principal-button($width) {
+	font-family: $secondary-font;
+	background-color: $button-color;
+	padding: 10px;
+	color: $button-color-text;
+	width: $width;
+	border: 0;
+	cursor: pointer;
+	&:hover {
+		color: $primary-color;
+	}
+}
+
+@mixin form-style {
+	background-color: white;
+	padding: 15px;
+	font-size: 16px;
+	border: none;
+	// width: 100%;
+}

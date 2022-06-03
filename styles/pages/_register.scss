@@ -1,0 +1,54 @@
+.section-register {
+	@include size-wiew;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+
+	&__title {
+		font-family: $principal-font;
+	}
+
+	&__image {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		img {
+			width: 100%;
+		}
+	}
+	// form
+	&__form {
+		display: flex;
+		flex-direction: column;
+		row-gap: 20px;
+
+		&-two-columns {
+			column-gap: 20px;
+			display: flex;
+
+			input {
+				width: 100%;
+			}
+		}
+
+		&-one-column {
+			column-gap: 20px;
+			display: flex;
+			flex-direction: column;
+			row-gap: 20px;
+		}
+
+		&-button {
+			@include principal-button(400px);
+		}
+		input {
+			@include form-style;
+		}
+		select {
+			@include form-style;
+		}
+	}
+	&__p {
+		font-family: $secondary-font;
+		font-size: 12px;
+	}
+}

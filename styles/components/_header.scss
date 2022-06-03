@@ -1,0 +1,31 @@
+.header {
+	&__nav {
+		background-color: $primary-color;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 15px;
+		align-items: center;
+	}
+
+	a {
+		color: $color-menu;
+		text-decoration: none;
+		font-family: $secondary-font;
+		font-size: 18px;
+		padding: 5px 15px;
+	}
+	&__logo {
+		font-family: $principal-font;
+		font-size: 20px !important;
+		font-weight: bold;
+	}
+}
+
+.message-error {
+	background-color: rgba(250, 115, 149, 0.5);
+	font-family: $principal-font;
+	padding: 20px;
+	color: red;
+	display: none;
+}

@@ -1,0 +1,67 @@
+.section-user-profile {
+	@include size-wiew;
+}
+
+.container {
+	display: flex;
+	margin-left: 16%;
+	margin-right: 16%;
+	column-gap: 50px;
+}
+
+.col {
+	flex: 50%;
+	padding: 2%;
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+
+	h3 {
+		font-family: $principal-font;
+	}
+	p {
+		font-family: $secondary-font;
+	}
+}
+
+.alignRight {
+	text-align: right;
+	margin-right: 10%;
+}
+
+.inputBox {
+	@include form-style;
+	width: 100%;
+}
+
+.addBtn {
+	@include principal-button(200px);
+}
+
+.modBtn {
+	@include principal-button(100px);
+}
+
+.addProp {
+	@include principal-button(50px);
+}
+
+.properties {
+	.photos {
+		display: flex;
+		justify-content: flex-start;
+		column-gap: 10px;
+	}
+	&__image {
+		width: 100px;
+		height: 100px;
+		display: block;
+		background-size: cover;
+	}
+	.btns-photo {
+		margin-top: 10px;
+	}
+	.notImage {
+		font-family: $secondary-font;
+	}
+}

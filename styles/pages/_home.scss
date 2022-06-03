@@ -1,0 +1,68 @@
+.section-home {
+	@include size-wiew;
+
+	&__filters {
+		margin-bottom: 40px;
+		display: flex;
+		justify-content: flex-end;
+		column-gap: 20px;
+
+		&-button {
+			@include principal-button(150px);
+		}
+		&-search {
+			@include form-style;
+		}
+	}
+	&__btn-search {
+		border: none;
+		background: transparent;
+		cursor: pointer;
+		img {
+			width: 30px;
+		}
+	}
+
+	&__card-container {
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		row-gap: 40px;
+		column-gap: 40px;
+	}
+}
+
+.card {
+	&__img {
+		background-size: cover;
+		// width: 200px;
+		height: 200px;
+		display: block;
+	}
+	&__title {
+		font-family: $secondary-font;
+		padding: 0;
+		margin: 0;
+		font-size: 18px;
+		margin-top: 25px;
+	}
+	&__address {
+		font-family: $secondary-font;
+		margin: 0;
+		font-size: 14px;
+	}
+	&__price {
+		font-family: $secondary-font;
+		margin: 0;
+		font-size: 14px;
+
+		span {
+			color: #0084ff;
+			font-weight: bold;
+		}
+	}
+	&__button {
+		@include principal-button(150px);
+		margin-top: 20px;
+	}
+}

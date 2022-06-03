@@ -1,0 +1,19 @@
+.errors {
+	width: 404px;
+	background-color: rgba(255, 0, 0, 0.1);
+	padding: 5px 20px;
+	font-weight: 300;
+	p {
+		color: red;
+		font-size: 14px !important;
+		font-family: $secondary-font;
+		span {
+			font-weight: 400;
+		}
+	}
+}
+.order-now__form {
+	.errors {
+		width: 259px;
+	}
+}
