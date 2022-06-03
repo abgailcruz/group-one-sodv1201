@@ -23,6 +23,9 @@ $(document).ready(function () {
 			alert("Name must be filled out");
 			return false;
 		}
-		return alert(" Thanks for contact us");
+		//When the form is validaded the login page take to page User-profile
+		window.location.href = "/user-profile.html";
+		// alert(' Thanks for contact us');
+		//to make some changes
 	});
 });

@@ -270,6 +270,53 @@
   margin-bottom: 40px;
   border-color: rgba(135, 135, 135, 0.5);
   padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.section-login .div1-image {
+  width: 30%;
+  -ms-flex-line-pack: left;
+      align-content: left;
+}
+
+.section-login .div2-form-login {
+  width: 50%;
+}
+
+.section-login .inputLogin {
+  display: block;
+  width: 50%;
+  margin-bottom: 5%;
+  margin-left: 15%;
+  color: gray;
+  padding-left: 3%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  border: none;
+}
+
+.section-login .modBtn-login {
+  width: 40%;
+  background-color: black;
+  color: white;
+  padding: 2%;
+  margin-left: 15%;
+  cursor: pointer;
+}
+
+.section-login #h2-login {
+  margin-top: 10%;
+  margin-left: 15%;
+  font-family: "Poppins", sans-serif;
 }
 
 .section-register {

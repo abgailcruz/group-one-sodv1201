@@ -35,11 +35,11 @@ function addNew() {
 	}
 
 	properties.push({ id: new Date().getTime(), property, city, postCode, googleMap, price, images });
-	showProperties();
+	showProperties(properties);
 }
 
-function showProperties() {
-	const html = properties.map(
+function showProperties(data) {
+	const html = data.map(
 		(item) => `<div>
 		<h3>${item.property} - ${convertToDollars(item.price)}</h3>
 		<p>${item.city} ${item.postCode}</p>
@@ -55,7 +55,7 @@ function showProperties() {
 		}
 		<div class="btns-photo">
 			<button class="modBtn">Edit</button>
-			<button class="modBtn">Delete</button>
+			<button class="modBtn" onClick="deleteProperty(${item.id})">Delete</button>
 		</div>
 	</div>`
 	);
@@ -75,4 +75,10 @@ const buildImages = function (images) {
 		)
 		.flat()
 		.join("");
+};
+
+const deleteProperty = (id) => {
+	const newArray = properties.filter((item) => item.id !== id);
+	properties = newArray;
+	showProperties(properties);
 };

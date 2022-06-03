@@ -1,3 +1,39 @@
 .section-login {
 	@include size-wiew;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	.div1-image {
+		width: 30%;
+		align-content: left;
+	}
+
+	.div2-form-login {
+		width: 50%;
+	}
+
+	.inputLogin {
+		display: block;
+		width: 50%;
+		margin-bottom: 5%;
+		margin-left: 15%;
+		color: gray;
+		padding-left: 3%;
+		padding-top: 3%;
+		padding-bottom: 3%;
+		border: none;
+	}
+	.modBtn-login {
+		width: 40%;
+		background-color: black;
+		color: white;
+		padding: 2%;
+		margin-left: 15%;
+		cursor: pointer;
+	}
+	#h2-login {
+		margin-top: 10%;
+		margin-left: 15%;
+		font-family: "Poppins", sans-serif;
+	}
 }
