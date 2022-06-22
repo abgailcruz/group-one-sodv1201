@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 // get all registers
 app.get("/registers", (req, res) => {
-	const data = fs.readFileSync("register.json", "utf-8");
+	const data = { foo: "foo" };
 	res.json({
 		status: "ok",
 		data: JSON.parse(data)
