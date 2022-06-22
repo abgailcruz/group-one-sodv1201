@@ -1,0 +1,14 @@
+{
+  "name": "server-workspaces",
+  "version": "1.0.0",
+  "description": "This is the final project to Introduction to  Web Programming",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abigail Cruz, Maria Estrella, Debora Salles Antunes, Jorge Alberto Hurtado Ortega",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
