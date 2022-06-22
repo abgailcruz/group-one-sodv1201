@@ -32,10 +32,16 @@ function addNewRegister() {
 }
 
 function saveData(data) {
-	const users = localStorage.getItem("users");
-	if (users === null) {
-		localStorage.setItem("users", JSON.stringify([data]));
-	} else {
-		localStorage.setItem("users", JSON.stringify([...JSON.parse(users), data]));
-	}
+	fetch("http://localhost:4000/register", {
+		method: "POST",
+		body: JSON.stringify(data),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+		.then((response) => response)
+		.then((response) => {
+			console.log("response", response, typeof response);
+		})
+		.catch((err) => console.error(err));
 }

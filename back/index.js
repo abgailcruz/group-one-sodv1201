@@ -10,6 +10,7 @@ app.use(cors());
 
 app.post("/register", function (req, res) {
 	const { body } = req;
+	console.log("body: ", body);
 	res.json({
 		status: "ok",
 		body
