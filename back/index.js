@@ -34,7 +34,7 @@ app.listen(PORT, () => console.log(`Running on port: http://localhost:${PORT}`))
 
 
 //create a get point for login page
-app.get('/login', (req, res) => {
+app.get('/login', function (req, res) {
 	console.log('Login Page')
 	res.send ('Login Page')
 	});
