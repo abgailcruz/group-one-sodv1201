@@ -28,11 +28,13 @@ export function queryInsert(props) {
 	});
 }
 
-export function querySelect(query) {
-	const sql = `SELECT * FROM users`;
+export function querySelect(query, callback) {
+	const sql = query;
 	db.all(sql, [], (err, rows) => {
+		console.log("rows1", rows);
 		if (err) return console.error(err.message);
-		return "querySelect done";
+		console.log("rows2", rows);
+		callback(rows);
 	});
 }
 

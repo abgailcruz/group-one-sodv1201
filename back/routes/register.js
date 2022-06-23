@@ -1,5 +1,6 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
+import db, { queryInsert, querySelect } from "../db/db.js";
 
 const registersRoute = express.Router();
 
@@ -8,8 +9,17 @@ const registersRoute = express.Router();
  * Create a register
  */
 registersRoute.post("/", function (req, res) {
+	console.log("ENTRO");
 	const { body } = req;
 	console.log("body: ", body);
+	queryInsert({
+		table: "Roles",
+		columns: ["RoleName"],
+		columnsValue: ["Owner"]
+	});
+	querySelect(`SELECT * FROM Roles`, (data) => {
+		console.log("---->", data);
+	});
 	res.json({
 		status: "ok",
 		body
