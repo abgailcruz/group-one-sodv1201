@@ -17,10 +17,12 @@ db.serialize(() => {
 	db.run(tables.workspacesImage);
 });
 
-export function queryInsert(query, insert) {
-	const sql = `INSERT INTO users(first_name, last_name, email, password, phone, city)
-  VALUES (?, ?, ?, ?, ?, ?)`;
-	db.run(sql, ["Jorge", "hurtado", "qwe@qwe.com", "1231asd", "123123123", "calgary"], (err) => {
+export function queryInsert(props) {
+	const { table, columns, columnsValue } = props;
+	const values = columns.map((item) => "?").join(", ");
+	const sql = `INSERT INTO ${table}(${columns.join(", ")})
+  VALUES (${values})`;
+	db.run(sql, columnsValue, (err) => {
 		if (err) return console.error(err.message);
 		return "queryInsert done";
 	});
