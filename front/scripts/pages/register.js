@@ -32,7 +32,7 @@ function addNewRegister() {
 }
 
 function saveData(data) {
-	fetch("http://localhost:4000/registers", {
+	fetch("http://localhost:4000/register", {
 		method: "POST",
 		body: JSON.stringify(data),
 		headers: {
