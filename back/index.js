@@ -1,32 +1,26 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { v4 as uuidv4 } from "uuid";
+
+// IMPORT ROUTES
+import registersRoute from "./routes/register.js";
 
 const app = express();
 const PORT = 4000;
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post("/register", function (req, res) {
-	const { body } = req;
-	console.log("body: ", body);
-	res.json({
-		status: "ok",
-		body
-	});
-});
+// all register routers will be start with this route /register
+app.use("/registers", registersRoute);
 
 app.get("/", (req, res) => {
 	res.send("Server working!");
 });
 
-// get all registers
-app.get("/registers", (req, res) => {
-	const data = { foo: "foo" };
-	res.json({
-		status: "ok",
-		data: JSON.parse(data)
+app.use((error, req, res, next) => {
+	res.status(400).json({
+		status: "error",
+		message: error.message
 	});
 });
 
