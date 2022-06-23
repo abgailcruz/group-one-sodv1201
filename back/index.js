@@ -30,4 +30,10 @@ app.get("/registers", (req, res) => {
 	});
 });
 
+app.get("/workspaces", (req, res) => {
+	res.json({
+		status: "ok",
+	});
+})
+
 app.listen(PORT, () => console.log(`Running on port: http://localhost:${PORT}`));
