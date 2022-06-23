@@ -1,9 +1,3 @@
-import sqlite3 from "sqlite3";
-let sql;
-
-// Read or Create database
-const db = new sqlite3.Database("./workspace.db", sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => err && console.error(err));
-
 // Create Roles table
 const rolesTable = `CREATE TABLE Roles (
   RoleID INT PRIMARY KEY,
@@ -95,34 +89,15 @@ const workspacesImage = `CREATE TABLE Workspaces_Image (
   WorkspaceID int REFERENCES Workspaces (WorkspaceID) ON DELETE CASCADE
 )`;
 
-db.serialize(() => {
-	db.run(rolesTable);
-	db.run(citiesTable);
-	db.run(paymentMethod);
-	db.run(users);
-	db.run(types);
-	db.run(leaseTeam);
-	db.run(workspaces);
-	db.run(booking);
-	db.run(images);
-	db.run(workspacesImage);
-});
-
-export function queryInsert(query, insert) {
-	sql = `INSERT INTO users(first_name, last_name, email, password, phone, city)
-  VALUES (?, ?, ?, ?, ?, ?)`;
-	db.run(sql, ["Jorge", "hurtado", "qwe@qwe.com", "1231asd", "123123123", "calgary"], (err) => {
-		if (err) return console.error(err.message);
-		return "queryInsert done";
-	});
-}
-
-export function querySelect(query) {
-	sql = `SELECT * FROM users`;
-	db.all(sql, [], (err, rows) => {
-		if (err) return console.error(err.message);
-		return "querySelect done";
-	});
-}
-
-export default db;
+export default {
+	rolesTable,
+	citiesTable,
+	paymentMethod,
+	users,
+	types,
+	leaseTeam,
+	workspaces,
+	booking,
+	images,
+	workspacesImage
+};

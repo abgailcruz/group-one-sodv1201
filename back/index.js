@@ -4,7 +4,7 @@ import cors from "cors";
 
 // IMPORT ROUTES
 import registersRoute from "./routes/register.js";
-import db from "./db.js";
+import db from "./db/db.js";
 
 const app = express();
 const PORT = 4000;
