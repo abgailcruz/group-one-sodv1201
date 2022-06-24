@@ -25,18 +25,3 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(PORT, () => console.log(`Running on port: http://localhost:${PORT}`));
-
-
-//create a get point for login page
-app.get('/login', function (req, res) {
-	console.log('Login Page')
-	res.send ('Login Page')
-	});
-
-// create a post endpoint for login page
-app.post('/login', function(req, res) {
-	const { body } = req;
-	// extract data from request
-	// create a database entry
-	res.json({"code": "loginCreated"})
-	});
