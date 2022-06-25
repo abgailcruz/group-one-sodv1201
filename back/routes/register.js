@@ -9,9 +9,7 @@ const registersRoute = express.Router();
  * Create a register
  */
 registersRoute.post("/", function (req, res) {
-	console.log("ENTRO");
 	const { body } = req;
-	console.log("body: ", body);
 	queryInsert({
 		table: "Roles",
 		columns: ["RoleName"],

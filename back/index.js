@@ -5,15 +5,17 @@ import cors from "cors";
 // IMPORT ROUTES
 import registersRoute from "./routes/register.js";
 import workspacesRoute from "./routes/workspaces.js";
+import catalogsRoute from "./routes/catalogs.js";
 
 const app = express();
 const PORT = 4000;
 app.use(bodyParser.json());
 app.use(cors());
 
-// all register routers will be start with this route /register
+// API routes
 app.use("/registers", registersRoute);
 app.use("/workspaces", workspacesRoute);
+app.use("/catalogs", catalogsRoute);
 
 app.get("/", (req, res) => {
 	res.send("Server working!");

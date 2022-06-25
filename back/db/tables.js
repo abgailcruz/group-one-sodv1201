@@ -1,17 +1,17 @@
 // Create Roles table
-const rolesTable = `CREATE TABLE Roles (
-  RoleID INT PRIMARY KEY,
-  RoleName VARCHAR(100) NOT NULL
+const rolesTable = `CREATE TABLE IF NOT EXISTS Roles (
+  RoleID VARCHAR(250) PRIMARY KEY,
+  RoleName VARCHAR(100) NOT NULL UNIQUE
 )`;
 
 // Create Cities table
-const citiesTable = `CREATE TABLE Cities (
-  CityID INT PRIMARY KEY,
+const citiesTable = `CREATE TABLE IF NOT EXISTS Cities (
+  CityID VARCHAR(250) PRIMARY KEY,
   CityName VARCHAR(100) NOT NULL UNIQUE
 )`;
 
 // Create Payment_Method table
-const paymentMethod = `CREATE TABLE Payment_Method (
+const paymentMethod = `CREATE TABLE IF NOT EXISTS Payment_Method (
   PaymentID INT NOT NULL PRIMARY KEY,
   Card varchar(50),
   Address varchar(50) NOT NULL,
@@ -19,8 +19,8 @@ const paymentMethod = `CREATE TABLE Payment_Method (
 )`;
 
 // Create Users table
-const users = `CREATE TABLE Users (
-  UserID INT PRIMARY KEY,
+const users = `CREATE TABLE IF NOT EXISTS Users (
+  UserID VARCHAR(250) PRIMARY KEY,
   CityID INT REFERENCES Cities (CityID),
   PaymentID INT REFERENCES Payment_Method (PaymentID),
   RoleID INT REFERENCES Roles (RoleID),
@@ -32,20 +32,20 @@ const users = `CREATE TABLE Users (
 )`;
 
 // Create Types table
-const types = `CREATE TABLE Types (
-  TypeID INT PRIMARY KEY,
+const types = `CREATE TABLE IF NOT EXISTS Types (
+  TypeID VARCHAR(250) PRIMARY KEY,
   TypeName VARCHAR(100) NOT NULL UNIQUE
 )`;
 
 // Create Lease_team table
-const leaseTeam = `CREATE TABLE Lease_team (
-  LeaseID INT PRIMARY KEY,
+const leaseTeam = `CREATE TABLE IF NOT EXISTS Lease_team (
+  LeaseID VARCHAR(250) PRIMARY KEY,
   LeaseName VARCHAR(100) NOT NULL UNIQUE
 )`;
 
 // Create Workspaces table
-const workspaces = `CREATE TABLE Workspaces (
-  WorkspaceID INT PRIMARY KEY,
+const workspaces = `CREATE TABLE IF NOT EXISTS Workspaces (
+  WorkspaceID VARCHAR(250) PRIMARY KEY,
   PropertyName varchar(50) NOT NULL UNIQUE,
   PropertyAddress varchar(50),
   CityID INT REFERENCES Cities (CityID),
@@ -67,8 +67,8 @@ const workspaces = `CREATE TABLE Workspaces (
 )`;
 
 // Create Booking table
-const booking = `CREATE TABLE Booking(
-  BookingID INT PRIMARY KEY,
+const booking = `CREATE TABLE IF NOT EXISTS Booking(
+  BookingID VARCHAR(250) PRIMARY KEY,
   UserID INT REFERENCES Users (UserID),
   WorkspaceID INT REFERENCES Workspaces (WorkspaceID),
   BookingStartDate DATETIME,
@@ -77,14 +77,14 @@ const booking = `CREATE TABLE Booking(
 )`;
 
 // Create Images table
-const images = `CREATE TABLE Images(
+const images = `CREATE TABLE IF NOT EXISTS Images(
   ImageID INT NOT NULL PRIMARY KEY,
   image_URL VARCHAR (200) NOT NULL
 )`;
 
 // Create Workspaces_Image table
-const workspacesImage = `CREATE TABLE Workspaces_Image (
-  Workspace_ImageID INT PRIMARY KEY,
+const workspacesImage = `CREATE TABLE IF NOT EXISTS Workspaces_Image (
+  Workspace_ImageID VARCHAR(250) PRIMARY KEY,
   ImageID int REFERENCES Images(ImageID),
   WorkspaceID int REFERENCES Workspaces (WorkspaceID) ON DELETE CASCADE
 )`;
