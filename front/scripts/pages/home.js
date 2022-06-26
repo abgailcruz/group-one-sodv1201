@@ -1,8 +1,6 @@
 function sortBy(field) {
 	const propertiesFilters = properties.sort((a, b) => {
 		// it is validated if the field is a number or a string
-		console.log(a);
-		console.log(b);
 		let fieldA = typeof a[field] ? a[field] : a[field].toLowerCase(),
 			fieldB = typeof b[field] ? b[field] : b[field].toLowerCase();
 		if (fieldA < fieldB) return -1;
