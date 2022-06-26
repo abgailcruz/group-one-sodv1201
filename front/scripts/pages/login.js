@@ -35,7 +35,12 @@ function login(data) {
 	})
 		.then((response) => response.json())
 		.then((response) => {
-			localStorage.setItem("loginWorkspace", JSON.stringify(response));
+			console.log("response", response);
+			if (response.status === "error") {
+				openErrors(response.message);
+				return;
+			}
+			localStorage.setItem("loginWorkspace", JSON.stringify(response.data));
 			if (localStorage.getItem("loginWorkspace")) {
 				window.location.href = "/front/user-profile.html";
 			}

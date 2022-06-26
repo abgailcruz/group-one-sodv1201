@@ -1,5 +1,3 @@
-
-
 function sortBy(field) {
 	const propertiesFilters = properties.sort((a, b) => {
 		// it is validated if the field is a number or a string
@@ -15,31 +13,29 @@ function sortBy(field) {
 	buildProperties(propertiesFilters);
 }
 
-function buildProperties() {
-console.log("entro 1")
-	fetch("http://localhost:4000/workspaces")
-		.then((response) => response.json())
-		.then((response) => {
-			console.log("response", response, typeof response);
-			const html = response.data.map(
-				(item) => `	<div class="card">
+async function buildProperties() {
+	const workspacesResponse = await fetch("http://localhost:4000/workspaces");
+	const workspaces = await workspacesResponse.json();
 
-					<div
-						class="card__img"
-						style="
-							background-image: url(${item.image});
-						"
-					></div>
-					<h1 class="card__title">${item.name}</h1>
-					<p class="card__address">${item.address}</p>
-					<p class="card__price"><span>C ${convertToDollars(item.price)}</span> Per hour</p>
-					<button class="card__button">See detail</button>
-				</div>`
-				);
-				$("#card-container").append(html);
-		})
-		.catch((err) => console.error(err));
+	const imagesResponse = await fetch("http://localhost:4000/workspaces/images");
+	const images = await imagesResponse.json();
 
+	const html = workspaces.data.map(
+		(item) => `	<div class="card">
+
+			<div
+				class="card__img"
+				style="
+					background-image: url(${images.data.find((img) => img.ImageID === item.imagesIDs[0]).image_URL});
+				"
+			></div>
+			<h1 class="card__title">${item.PropertyName}</h1>
+			<p class="card__address">${item.PostalCode}</p>
+			<p class="card__price"><span>C ${convertToDollars(item.Price)}</span> Per hour</p>
+			<button class="card__button">See detail</button>
+		</div>`
+	);
+	$("#card-container").append(html);
 }
 
 buildProperties();

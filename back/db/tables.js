@@ -46,13 +46,13 @@ const leaseTeam = `CREATE TABLE IF NOT EXISTS Lease_team (
 // Create Workspaces table
 const workspaces = `CREATE TABLE IF NOT EXISTS Workspaces (
   WorkspaceID VARCHAR(250) PRIMARY KEY,
-  PropertyName varchar(50) NOT NULL UNIQUE,
+  PropertyName varchar(50) UNIQUE,
   PropertyAddress varchar(50),
   CityID INT REFERENCES Cities (CityID),
-  PostalCode VARCHAR(10) NOT NULL,
+  PostalCode VARCHAR(10),
   GoogleMap varchar(250),
   TypeID INT REFERENCES Types (TypeID),
-  Size varchar(50) NOT NULL,
+  Size varchar(50),
   NoOfCoworker INT,
   Parking TEXT,
   Smoking TEXT,
