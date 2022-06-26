@@ -1,7 +1,6 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 
-
 const workspacesRoute = express.Router();
 
 const data = [
@@ -114,13 +113,20 @@ const data = [
  * Method: GET
  * To get all workspaces
  */
- workspacesRoute.get("/", (req, res) => {
+workspacesRoute.get("/", (req, res) => {
 	res.json({
 		status: "ok",
 		data: JSON.parse(JSON.stringify(data))
 	});
 });
 
+/**
+ * Method: POST
+ * Create a workspace
+ */
+workspacesRoute.post("/create", function (req, res) {
+	console.log(req.body);
+	const { property, city, postCode, googleMap, price, images } = req.body;
+});
+
 export default workspacesRoute;
-
-

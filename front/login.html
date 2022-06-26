@@ -18,6 +18,11 @@
 			referrerpolicy="no-referrer"
 		></script>
 		<link rel="stylesheet" href="./styles/styles.css" />
+		<script>
+			if (localStorage.getItem("loginWorkspace")) {
+				window.location.href = "/front/user-profile.html";
+			}
+		</script>
 	</head>
 	<body>
 		<div id="modal"></div>
@@ -27,7 +32,7 @@
 		<!-- To make some changes-->
 		<section class="section-login">
 			<div class="div1-image">
-				<img src="assets/login-image.png" width="600px" height="450px"  alt="login">
+				<img src="./assets/login-image.png" width="600px" height="450px"  alt="login">
 			</div>
 
 			<div class="div2-form-login">

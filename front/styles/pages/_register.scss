@@ -20,6 +20,11 @@
 		display: flex;
 		flex-direction: column;
 		row-gap: 20px;
+		font-family: $secondary-font;
+
+		label {
+			font-size: 14px;
+		}
 
 		&-two-columns {
 			column-gap: 20px;

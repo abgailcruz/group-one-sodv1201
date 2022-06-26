@@ -8,19 +8,38 @@ const registersRoute = express.Router();
  * Method: POST
  * Create a register
  */
-registersRoute.post("/", function (req, res) {
-	const { body } = req;
-	queryInsert({
-		table: "Roles",
-		columns: ["RoleName"],
-		columnsValue: ["Owner"]
-	});
-	querySelect(`SELECT * FROM Roles`, (data) => {
-		console.log("---->", data);
-	});
-	res.json({
-		status: "ok",
-		body
+registersRoute.post("/create", function (req, res) {
+	const { name, lastName, email, password, phone, city, owner, coworker } = req.body;
+
+	// Here we need to get roles
+	querySelect("SELECT * FROM Users", (users) => {
+		const userExist = JSON.parse(users).find((item) => item.EmailAddress === email);
+		if (userExist) {
+			return res.json({
+				status: "error",
+				message: "This email is already created"
+			});
+		}
+		querySelect("SELECT * FROM Roles", (roles) => {
+			let role;
+			if (owner) {
+				role = JSON.parse(roles).find((item) => item.RoleName === "Owner");
+			} else if (!owner && coworker) {
+				role = JSON.parse(roles).find((item) => item.RoleName === "Coworker");
+			}
+
+			// Insert data to create a new user
+			queryInsert({
+				table: "Users",
+				columns: ["UserID", "CityID", "PaymentID", "RoleID", "Name", "Password", "EmailAddress", "Phone", "Active"],
+				columnsValue: [uuidv4(), city, null, role.RoleID, `${name} ${lastName}`, password, email, phone, 1]
+			});
+
+			res.json({
+				status: "ok",
+				message: "User created successfully"
+			});
+		});
 	});
 });
 
@@ -28,11 +47,13 @@ registersRoute.post("/", function (req, res) {
  * Method: GET
  * To get all registers
  */
-registersRoute.get("/", (req, res) => {
-	const data = { registers: ["foo"] };
-	res.json({
-		status: "ok",
-		data: JSON.parse(data)
+registersRoute.get("/users", (req, res) => {
+	querySelect("SELECT * FROM Users", (users) => {
+		const data = JSON.parse(users).map((item) => ({ ...item, Password: "Not available to view" }));
+		res.json({
+			status: "ok",
+			data
+		});
 	});
 });
 

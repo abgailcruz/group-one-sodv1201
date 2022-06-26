@@ -1,31 +1,44 @@
-//const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
 var booleana = false;
 
 $(document).ready(function () {
 	$("#btn1").click(function () {
-		var email1 = document.getElementById("email").value;
-		var password1 = document.getElementById("password").value;
+		var email = document.getElementById("email").value;
+		var password = document.getElementById("password").value;
 
-		if (!isNaN(email1)) {
-			alert("you entered a number, please fill with letters");
+		if (email == "") {
+			openErrors("Email must be filled and a valid character");
 			return false;
 		}
 
-		if (email1 == "") {
-			alert("Name must be filled and a valid character");
-			return false;
-		} else if (email1 == "") {
-			alert("Name must be filled out");
+		if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+			openErrors("You entered an email ");
 			return false;
 		}
 
-		if (password1 == "") {
-			alert("Name must be filled out");
+		if (password == "") {
+			openErrors("Password must be filled out");
 			return false;
 		}
+
 		//When the form is validaded the login page take to page User-profile
-		window.location.href = "/user-profile.html";
-		// alert(' Thanks for contact us');
-		//to make some changes
+		login({ email, password });
 	});
 });
+
+function login(data) {
+	fetch("http://localhost:4000/login", {
+		method: "POST",
+		body: JSON.stringify(data),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+		.then((response) => response.json())
+		.then((response) => {
+			localStorage.setItem("loginWorkspace", JSON.stringify(response));
+			if (localStorage.getItem("loginWorkspace")) {
+				window.location.href = "/front/user-profile.html";
+			}
+		})
+		.catch((err) => console.error(err));
+}

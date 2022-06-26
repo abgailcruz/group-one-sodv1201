@@ -26,7 +26,7 @@
 		<!-- Register container -->
 		<section class="section-register">
 			<div class="section-register__image" id="content-left-register">
-				<img id="img-rgstr" src="/assets/register-image.png" />
+				<img id="img-rgstr" src="./assets/register-image.png" />
 			</div>
 
 			<div class="section-register__form" id="content-right-register">
@@ -39,12 +39,12 @@
 					<input type="text" placeholder="Email" id="email" />
 					<input type="password" placeholder="Password" id="password" />
 					<input type="text" placeholder="Phone number" id="phone" />
-					<select id="city" placeholder="City" id="city">
+					<select placeholder="City" id="city">
 						<option>Select city</option>
-						<option value="calgary">Calgary</option>
-						<option value="edmonton">Edmonton</option>
 					</select>
 				</div>
+				<label><input type="checkbox" id="owner" /> I want to rent my own work space</label>
+				<label><input type="checkbox" id="coworker" /> I want to book a workspace</label>
 				<p class="section-register__p">You can register here to be able to upload your own workspaces</p>
 				<button id="register-button" class="section-register__form-button">Create new user</button>
 			</div>
@@ -53,6 +53,7 @@
 		<!-- Finish Register container -->
 
 		<footer class="footer" id="footer"></footer>
+		<script src="./scripts/utils.js"></script>
 		<script src="./scripts/components/header.js"></script>
 		<script src="./scripts/components/footer.js"></script>
 		<script src="./scripts/components/modal.js"></script>

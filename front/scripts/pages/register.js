@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	$("#register-button").click(addNewRegister);
+	getCities();
 });
 
 function addNewRegister() {
@@ -10,6 +11,8 @@ function addNewRegister() {
 	let password = $("#password").val();
 	let phone = $("#phone").val();
 	let city = $("#city").val();
+	let owner = $("#owner").is(":checked");
+	let coworker = $("#coworker").is(":checked");
 
 	const errorsMessage = [];
 	if (name.trim() === "") errorsMessage.push("Name");
@@ -27,19 +30,19 @@ function addNewRegister() {
 		return;
 	}
 
-	saveData({ id: new Date().getTime(), name, lastName, email, password, phone, city });
+	saveData({ name, lastName, email, password, phone, city, owner, coworker });
 	openModal("<p>Successful registration<p>", 100, 300);
 }
 
 function saveData(data) {
-	fetch("http://localhost:4000/registers", {
+	fetch("http://localhost:4000/registers/create", {
 		method: "POST",
 		body: JSON.stringify(data),
 		headers: {
 			"Content-Type": "application/json"
 		}
 	})
-		.then((response) => response)
+		.then((response) => response.json())
 		.then((response) => {
 			console.log("response", response, typeof response);
 		})

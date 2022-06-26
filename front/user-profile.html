@@ -18,6 +18,11 @@
 			referrerpolicy="no-referrer"
 		></script>
 		<link rel="stylesheet" href="./styles/styles.css" />
+		<script>
+			if (!localStorage.getItem("loginWorkspace")) {
+				window.location.href = "/front/login.html";
+			}
+		</script>
 	</head>
 	<body>
 		<div id="modal"></div>
@@ -28,7 +33,9 @@
 			<div class="col">
 				<h3>Add property</h3>
 				<input class="inputBox" type="text" placeholder="Property Name" id="property" />
-				<input class="inputBox" type="text" placeholder="City" id="city" />
+				<select class="inputBox" placeholder="City" id="city">
+					<option>Select city</option>
+				</select>
 				<input class="inputBox" type="text" placeholder="Post Code" id="postCode" />
 				<input class="inputBox" type="text" placeholder="Add Google Maps URL" id="gMap" />
 				<input class="inputBox" type="number" placeholder="Price" id="price" />

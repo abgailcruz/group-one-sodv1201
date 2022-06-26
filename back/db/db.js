@@ -16,43 +16,53 @@ db.serialize(() => {
 	db.run(tables.booking);
 	db.run(tables.images);
 	db.run(tables.workspacesImage);
+
+	// Insert data to Roles catalog
+	["Owner", "Coworker", "Master"].map((item) =>
+		queryInsert({
+			table: "Roles",
+			columns: ["RoleID", "RoleName"],
+			columnsValue: [uuidv4(), item]
+		})
+	);
+
+	// Insert data to Cities catalog
+	["Calagary", "Toronto", "Vancouver", "Edmonton"].map((item) =>
+		queryInsert({
+			table: "Cities",
+			columns: ["CityID", "CityName"],
+			columnsValue: [uuidv4(), item]
+		})
+	);
+
+	// Insert data to Lease_team catalog
+	["Daily", "Weekly", "Monthly"].map((item) =>
+		queryInsert({
+			table: "Lease_team",
+			columns: ["LeaseID", "LeaseName"],
+			columnsValue: [uuidv4(), item]
+		})
+	);
+
+	// Insert data to Types catalog
+	["Desk", "Meeting Room", "Private office"].map((item) =>
+		queryInsert({
+			table: "Types",
+			columns: ["TypeID", "TypeName"],
+			columnsValue: [uuidv4(), item]
+		})
+	);
+
+	// INSERT MASTER USER
+	querySelect("SELECT * FROM Roles", (roles) => {
+		let role = JSON.parse(roles).find((item) => item.RoleName === "Master");
+		queryInsert({
+			table: "Users",
+			columns: ["UserID", "CityID", "PaymentID", "RoleID", "Name", "Password", "EmailAddress", "Phone", "Active"],
+			columnsValue: [uuidv4(), null, null, role.RoleID, `Group Master`, "admin2022", "admin@admin.com", null, 1]
+		});
+	});
 });
-
-// Insert data to Roles catalog
-["Owner", "Coworker", "Master"].map((item) =>
-	queryInsert({
-		table: "Roles",
-		columns: ["RoleID", "RoleName"],
-		columnsValue: [uuidv4(), item]
-	})
-);
-
-// Insert data to Cities catalog
-["Calagary", "Toronto", "Vancouver", "Edmonton"].map((item) =>
-	queryInsert({
-		table: "Cities",
-		columns: ["CityID", "CityName"],
-		columnsValue: [uuidv4(), item]
-	})
-);
-
-// Insert data to Lease_team catalog
-["Daily", "Weekly", "Monthly"].map((item) =>
-	queryInsert({
-		table: "Lease_team",
-		columns: ["LeaseID", "LeaseName"],
-		columnsValue: [uuidv4(), item]
-	})
-);
-
-// Insert data to Types catalog
-["Desk", "Meeting Room", "Private office"].map((item) =>
-	queryInsert({
-		table: "Types",
-		columns: ["TypeID", "TypeName"],
-		columnsValue: [uuidv4(), item]
-	})
-);
 
 export function queryInsert(props) {
 	const { table, columns, columnsValue } = props;

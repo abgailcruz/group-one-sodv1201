@@ -1,40 +1,28 @@
 import express from "express";
-import bodyParser from "body-parser";
+import { querySelect } from "../db/db.js";
 
-const app = express()
-const port = 4000
+const loginRoute = express.Router();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+loginRoute.post("/", (req, res) => {
+	const { email, password } = req.body;
+	querySelect("SELECT * FROM Users", (users) => {
+		const data = JSON.parse(users).find((item) => item.Password === password && item.EmailAddress === email);
+		if (data === undefined) {
+			return res.json({
+				status: "error",
+				message: "User or password incorrect"
+			});
+		}
 
-app.post('/login', (req, res) => {
-  res.json(req.body)
-})
+		querySelect("SELECT * FROM Roles", (roles) => {
+			const role = JSON.parse(roles).find((item) => item.RoleID === data.RoleID);
 
-app.listen(port, () => {
-  console.log(`Running on port: http://localhost:${port}/login`)
-})
-
-
-/*
-
-THIS WAS THE FIRST I STARTED WORKING
-
-
-//create a get point for login page
-app.get('/login', function (req, res) {
-	console.log('Login Page')
-	res.send ('Login Page')
+			res.json({
+				status: "ok",
+				data: { id: data.UserID, user: data.Name, email: data.EmailAddress, role: role.RoleName }
+			});
+		});
 	});
+});
 
-// create a post endpoint for login page
-app.post('/login', function(req, res) {
-	const { body } = req;
-	// extract data from request
-	// create a database entry
-	res.json({"code": "loginCreated"})
-	});
-
-  */
+export default loginRoute;

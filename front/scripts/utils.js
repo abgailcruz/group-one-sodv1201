@@ -11,3 +11,19 @@ const formatter = new Intl.NumberFormat("en-US", {
 function convertToDollars(amount) {
 	return formatter.format(amount);
 }
+
+function getCities() {
+	fetch("http://localhost:4000/catalogs/cities")
+		.then((response) => response.json())
+		.then((response) => {
+			const { data } = response;
+			const html = data.map((item) => `<option value="${item.CityID}">${item.CityName}</option>`);
+			$("#city").append(html);
+		})
+		.catch((err) => console.error(err));
+}
+
+function userData() {
+	const user = localStorage.getItem("loginWorkspace");
+	return JSON.parse(user);
+}

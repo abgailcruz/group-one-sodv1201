@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	$("#addBtn").click(addNew);
+	getCities();
 });
 
 let properties = [];
@@ -34,7 +35,18 @@ function addNew() {
 		return;
 	}
 
-	properties.push({ id: new Date().getTime(), property, city, postCode, googleMap, price, images });
+	fetch("http://localhost:4000/workspaces/create", {
+		method: "POST",
+		body: JSON.stringify({ property, city, postCode, googleMap, price, images, id: userData().id }),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+		.then((response) => response.json())
+		.then((response) => {
+			console.log("response", response, typeof response);
+		})
+		.catch((err) => console.error(err));
 	showProperties(properties);
 }
 
