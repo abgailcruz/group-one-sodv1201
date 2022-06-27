@@ -12,7 +12,7 @@ function sortBy(field) {
 }
 
 async function buildProperties() {
-	const workspacesResponse = await fetch("http://localhost:4000/workspaces");
+	const workspacesResponse = await fetch("http://localhost:4000/workspaces/all");
 	const workspaces = await workspacesResponse.json();
 
 	const imagesResponse = await fetch("http://localhost:4000/workspaces/images");

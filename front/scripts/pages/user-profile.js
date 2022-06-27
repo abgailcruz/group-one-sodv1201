@@ -1,9 +1,8 @@
 $(document).ready(function () {
 	$("#addBtn").click(addNew);
 	getCities();
+	showProperties();
 });
-
-let properties = [];
 
 function addNew() {
 	let property = $("#property").val();
@@ -45,22 +44,30 @@ function addNew() {
 		.then((response) => response.json())
 		.then((response) => {
 			console.log("response", response, typeof response);
+			showProperties();
 		})
 		.catch((err) => console.error(err));
-	showProperties(properties);
 }
 
-function showProperties(data) {
-	const html = data.map(
-		(item) => `<div>
-		<h3>${item.property} - ${convertToDollars(item.price)}</h3>
-		<p>${item.city} ${item.postCode}</p>
+async function showProperties() {
+	const workspacesResponse = await fetch(`http://localhost:4000/workspaces/byuser/${userData().id}`);
+	const workspaces = await workspacesResponse.json();
+
+	const imagesResponse = await fetch("http://localhost:4000/workspaces/images");
+	const images = await imagesResponse.json();
+
+	const html = workspaces.data.map((item) => {
+		const wImages = item.imagesIDs.map((img) => images.data.find((imgf) => imgf.ImageID === img).image_URL);
+
+		return `<div>
+		<h3>${item.PropertyName} - ${convertToDollars(item.Price)}</h3>
+		<p>${item.city} ${item.PostalCode}</p>
 		${
-			item.images.length > 0
+			item.imagesIDs.length > 0
 				? `
 				<h3>Photos added</h3>
 				<div id="photos" class="photos">
-					${buildImages(item.images)}
+					${buildImages(wImages)}
 				</div>
 			`
 				: `<div class="notImage"><i>Not Images</i></div>`
@@ -69,9 +76,8 @@ function showProperties(data) {
 			<button class="modBtn">Edit</button>
 			<button class="modBtn" onClick="deleteProperty(${item.id})">Delete</button>
 		</div>
-	</div>`
-	);
-	$("#properties").empty();
+	</div>`;
+	});
 	$("#properties").append(html);
 }
 

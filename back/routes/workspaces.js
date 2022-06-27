@@ -8,8 +8,26 @@ const workspacesRoute = express.Router();
  * Method: GET
  * To get all workspaces
  */
-workspacesRoute.get("/", async (req, res) => {
+workspacesRoute.get("/all", async (req, res) => {
 	const workspaces = await querySelectAsync("SELECT * FROM Workspaces");
+	const workspacesImages = await querySelectAsync("SELECT * FROM Workspaces_Image");
+	const result = workspaces.map((item) => {
+		const imagesIDs = workspacesImages.filter((img) => img.WorkspaceID === item.WorkspaceID).map((img) => img.ImageID);
+		return { ...item, imagesIDs };
+	});
+
+	res.json({
+		status: "ok",
+		data: result
+	});
+});
+
+/**
+ * Method: GET
+ * To get all workspaces by user
+ */
+workspacesRoute.get("/byuser/:id", async (req, res) => {
+	const workspaces = await querySelectAsync(`SELECT * FROM Workspaces WHERE UserID = '${req.params.id}'`);
 	const workspacesImages = await querySelectAsync("SELECT * FROM Workspaces_Image");
 	const result = workspaces.map((item) => {
 		const imagesIDs = workspacesImages.filter((img) => img.WorkspaceID === item.WorkspaceID).map((img) => img.ImageID);
