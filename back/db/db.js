@@ -27,7 +27,7 @@ db.serialize(() => {
 	);
 
 	// Insert data to Cities catalog
-	["Calagary", "Toronto", "Vancouver", "Edmonton"].map((item) =>
+	["Calgary", "Toronto", "Vancouver", "Edmonton"].map((item) =>
 		queryInsert({
 			table: "Cities",
 			columns: ["CityID", "CityName"],

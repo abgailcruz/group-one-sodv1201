@@ -20,7 +20,7 @@ function addNew() {
 	const errorsMessage = [];
 	if (property.trim() === "") errorsMessage.push("Name");
 	if (city.trim() === "") errorsMessage.push("City");
-	if (postCode.trim() === "") errorsMessage.push("Postal Code ");
+	if (postCode.trim() === "") errorsMessage.push("Postal Code");
 	if (price.trim() === "") errorsMessage.push("Price");
 
 	if (img1.trim() !== "") images.push(img1);
@@ -122,15 +122,15 @@ function editOpen(id) {
 					`>
 	          <label for="postCode">Post Code:</label>
 	          <input class="inputBox" type="text" id="postCode" placeholder=` +
-					data.postCode +
+					data.PostalCode +
 					`>
 	          <label for="gMap">Google Map URL:</label>
 	          <input class="inputBox" type="text" id="gMap" placeholder=` +
-					data.googleMap +
+					data.GoogleMap +
 					`>
 	          <label for="price">Price:</label>
 	          <input class="inputBox" type="number" id="price" placeholder=` +
-					data.price +
+					data.Price +
 					`>
 
 	          <p>You can add until four images <i>(url images only)</i></p>
@@ -154,8 +154,8 @@ function editOpen(id) {
 	          <button onclick="saveEdit('${data.WorkspaceID}')">Save</button>
 
 	      	`,
-				800,
-				500
+				630,
+				550
 			);
 		})
 		.catch((err) => console.error(err));
