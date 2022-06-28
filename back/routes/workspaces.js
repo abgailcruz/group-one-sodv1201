@@ -1,6 +1,6 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
-import { queryInsert, querySelect, querySelectAsync } from "../db/db.js";
+import { queryInsert, querySelect, querySelectAsync, queryUpdate } from "../db/db.js";
 
 const workspacesRoute = express.Router();
 
@@ -128,19 +128,56 @@ workspacesRoute.post("/create", function (req, res) {
 
 workspacesRoute.get("/byid/:id", async (req, res) => {
 	const workspace = await querySelectAsync(`SELECT * FROM Workspaces WHERE WorkspaceID = '${req.params.id}'`);
+	const workspacesImages = await querySelectAsync("SELECT * FROM Workspaces_Image");
+	const images = await querySelectAsync("SELECT * FROM Images");
+	const result = workspace.map((item) => {
+		const imagesIDs = workspacesImages.filter((img) => img.WorkspaceID === item.WorkspaceID).map((img) => img.ImageID);
+		const newImages = imagesIDs.map((item) => images.find((img) => img.ImageID === item));
+		return { ...item, images: newImages };
+	});
 	res.json({
 		status: "ok",
-		data: workspace[0]
+		data: result[0]
 	});
 });
 
 workspacesRoute.put("/update/:id", async (req, res) => {
-	console.log("ID is: ", req.params.id);
-	console.log("body is: ", req.body);
-	// const workspace = await querySelectAsync(`SELECT * FROM Workspaces WHERE WorkspaceID = '${req.params.id}'`);
+	const { property, city, postCode, googleMap, price, images } = req.body;
+	const workspacesImages = await querySelectAsync(`SELECT * FROM Workspaces_Image WHERE WorkspaceID = '${req.params.id}'`);
+	console.log("workspacesImages->", workspacesImages.length);
+
+	queryUpdate({
+		table: "Workspaces",
+		fields: ["PropertyName", "CityID", "PostalCode", "GoogleMap", "Price"],
+		fieldsValue: [property, city, postCode, googleMap, price],
+		whereCondition: `WorkspaceID = '${req.params.id}'`
+	});
+	images.forEach((item) => {
+		console.log("item: ", item);
+		if (item.id !== null && workspacesImages <= 4) {
+			const imgID = uuidv4();
+			queryInsert({
+				table: "Images",
+				columns: ["ImageID", "image_URL"],
+				columnsValue: [imgID, item.url]
+			});
+			queryInsert({
+				table: "Workspaces_Image",
+				columns: ["Workspace_ImageID", "ImageID", "WorkspaceID"],
+				columnsValue: [uuidv4(), imgID, req.params.id]
+			});
+		} else {
+			queryUpdate({
+				table: "Images",
+				fields: ["image_URL"],
+				fieldsValue: [item.url],
+				whereCondition: `ImageID = '${item.id}'`
+			});
+		}
+	});
 	res.json({
-		status: "ok"
-		// 	data: workspace[0]
+		status: "ok",
+		data: "data updated successfully"
 	});
 });
 

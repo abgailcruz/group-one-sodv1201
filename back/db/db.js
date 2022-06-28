@@ -75,6 +75,18 @@ export function queryInsert(props) {
 	});
 }
 
+export function queryUpdate(props) {
+	const { table, fields, fieldsValue, whereCondition } = props;
+	const values = fields.map((item) => `${item} = ?`).join(", ");
+	const sql = `UPDATE ${table} SET ${values} WHERE ${whereCondition}`;
+	console.log("fieldsValue", fieldsValue);
+	console.log("sql", sql);
+	db.run(sql, fieldsValue, (err) => {
+		if (err) return console.error(err.message);
+		return "queryUpdate done";
+	});
+}
+
 export function querySelect(query, callback) {
 	const sql = query;
 	db.all(sql, [], (err, rows) => {

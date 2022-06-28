@@ -12,13 +12,13 @@ function convertToDollars(amount) {
 	return formatter.format(amount);
 }
 
-function getCities() {
+function getCities(id, defaultID) {
 	fetch("http://localhost:4000/catalogs/cities")
 		.then((response) => response.json())
 		.then((response) => {
 			const { data } = response;
-			const html = data.map((item) => `<option value="${item.CityID}">${item.CityName}</option>`);
-			$("#city").append(html);
+			const html = data.map((item) => `<option value="${item.CityID}" ${item.CityID === defaultID && "selected"}>${item.CityName}</option>`);
+			$(id).append(html);
 		})
 		.catch((err) => console.error(err));
 }

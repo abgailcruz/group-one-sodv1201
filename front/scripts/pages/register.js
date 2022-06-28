@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	$("#register-button").click(addNewRegister);
-	getCities();
+	getCities("#city");
 });
 
 function addNewRegister() {

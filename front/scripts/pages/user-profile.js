@@ -1,6 +1,6 @@
 $(document).ready(function () {
 	$("#addBtn").click(addNew);
-	getCities();
+	getCities("#city");
 	showProperties();
 });
 
@@ -104,7 +104,6 @@ const deleteProperty = (id) => {
 };
 
 function editOpen(id) {
-	console.log("id:  ", id);
 	fetch(`http://localhost:4000/workspaces/byid/${id}`)
 		.then((response) => response.json())
 		.then((response) => {
@@ -112,76 +111,92 @@ function editOpen(id) {
 			const { data } = response;
 			openModal(
 				`
+					<div class="edit-form">
+						<h4>Edit workspace</h4>
 	          <label for="property">Property:</label>
-	          <input class="inputBox" type="text" id="property" placeholder=` +
-					data.PropertyName +
-					`>
+	          <input class="inputBox" type="text" id="propertyEdit" value="${data.PropertyName}">
 	          <label for="city">City:</label>
-	          <input class="inputBox" type="text" id="city" placeholder=` +
-					data.CityID +
-					`>
+						<select class="inputBox" placeholder="City" id="cityEdit">
+							<option>Select city</option>
+						</select>
 	          <label for="postCode">Post Code:</label>
-	          <input class="inputBox" type="text" id="postCode" placeholder=` +
-					data.PostalCode +
-					`>
+	          <input class="inputBox" type="text" id="postCodeEdit" value="${data.PostalCode}">
 	          <label for="gMap">Google Map URL:</label>
-	          <input class="inputBox" type="text" id="gMap" placeholder=` +
-					data.GoogleMap +
-					`>
+	          <input class="inputBox" type="text" id="gMapEdit" value="${data.GoogleMap}">
 	          <label for="price">Price:</label>
-	          <input class="inputBox" type="number" id="price" placeholder=` +
-					data.Price +
-					`>
-
+	          <input class="inputBox" type="number" id="priceEdit" value="${data.Price}">
 	          <p>You can add until four images <i>(url images only)</i></p>
 	          <label for="imgUrl1">Image URL 1:</label>
-	          <input class="inputBox" type="text" id="imgUrl1" placeholder=` +
-					data.img1 +
-					`>
+	          <input class="inputBox" type="text" id="imgUrl1Edit" value="${data.images[0] ? data.images[0].image_URL : ""}">
+						<input type="hidden" id="imghidden0" value="${data.images[0] ? data.images[0].ImageID : ""}">
 	          <label for="imgUrl2">Image URL 2:</label>
-	          <input class="inputBox" type="text" id="imgUrl2" placeholder=` +
-					data.img2 +
-					`>
+	          <input class="inputBox" type="text" id="imgUrl2Edit" value="${data.images[1] ? data.images[1].image_URL : ""}">
+						<input type="hidden" id="imghidden1" value="${data.images[1] ? data.images[1].ImageID : ""}">
 	          <label for="imgUrl1">Image URL 3:</label>
-	          <input class="inputBox" type="text" id="imgUrl3" placeholder=` +
-					data.img3 +
-					`>
+	          <input class="inputBox" type="text" id="imgUrl3Edit" value="${data.images[2] ? data.images[2].image_URL : ""}">
+						<input type="hidden" id="imghidden2" value="${data.images[2] ? data.images[2].ImageID : ""}">
 	          <label for="imgUrl4">Image URL 4:</label>
-	          <input class="inputBox" type="text" id="imgUrl4" placeholder=` +
-					data.img4 +
-					`>
-
-	          <button onclick="saveEdit('${data.WorkspaceID}')">Save</button>
-
+	          <input class="inputBox" type="text" id="imgUrl4Edit" value="${data.images[3] ? data.images[3].image_URL : ""}">
+						<input type="hidden" id="imghidden3" value="${data.images[3] ? data.images[3].ImageID : ""}">
+	          <button class="addBtn" onclick="saveEdit('${data.WorkspaceID}')">Save</button>
+					<div>
 	      	`,
 				630,
-				550
+				438
 			);
+			getCities("#cityEdit", data.CityID);
 		})
 		.catch((err) => console.error(err));
 }
 
 function saveEdit(id) {
-	console.log("id-->", id);
-
+	const property = $("#propertyEdit").val();
+	const city = $("#cityEdit").val();
+	const postCode = $("#postCodeEdit").val();
+	const googleMap = $("#gMapEdit").val();
+	const price = $("#priceEdit").val();
+	const images = [];
+	const img1 = $("#imgUrl1Edit").val();
+	const img2 = $("#imgUrl2Edit").val();
+	const img3 = $("#imgUrl3Edit").val();
+	const img4 = $("#imgUrl4Edit").val();
+	const imghidden0 = $("#imghidden0").val();
+	const imghidden1 = $("#imghidden1").val();
+	const imghidden2 = $("#imghidden2").val();
+	const imghidden3 = $("#imghidden3").val();
+	const body = {
+		property,
+		city,
+		postCode,
+		googleMap,
+		price,
+		images,
+		images: [
+			{
+				id: imghidden0 ? imghidden0 : null,
+				url: img1
+			},
+			{
+				id: imghidden1 ? imghidden1 : null,
+				url: img2
+			},
+			{
+				id: imghidden2 ? imghidden2 : null,
+				url: img3
+			},
+			{
+				id: imghidden3 ? imghidden3 : null,
+				url: img4
+			}
+		]
+	};
 	fetch(`http://localhost:4000/workspaces/update/${id}`, {
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ hola: "hola como estas", name: "Jorge" })
+		body: JSON.stringify(body)
 	})
 		.then((response) => response.json())
 		.then((response) => {
 			console.log("response-->", response);
 		});
-	// let property = $("#property").val();
-	// let city = $("#city").val();
-	// let postCode = $("#postCode").val();
-	// let googleMap = $("#gMap").val();
-	// let price = $("#price").val();
-	// let images = [];
-	// let img1 = $("#imgUrl1").val();
-	// let img2 = $("#imgUrl2").val();
-	// let img3 = $("#imgUrl3").val();
-	// let img4 = $("#imgUrl4").val();
-	// alert("Save button is working!");
 }
