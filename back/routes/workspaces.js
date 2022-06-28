@@ -126,4 +126,22 @@ workspacesRoute.post("/create", function (req, res) {
 	});
 });
 
+workspacesRoute.get("/byid/:id", async (req, res) => {
+	const workspace = await querySelectAsync(`SELECT * FROM Workspaces WHERE WorkspaceID = '${req.params.id}'`);
+	res.json({
+		status: "ok",
+		data: workspace[0]
+	});
+});
+
+workspacesRoute.put("/update/:id", async (req, res) => {
+	console.log("ID is: ", req.params.id);
+	console.log("body is: ", req.body);
+	// const workspace = await querySelectAsync(`SELECT * FROM Workspaces WHERE WorkspaceID = '${req.params.id}'`);
+	res.json({
+		status: "ok"
+		// 	data: workspace[0]
+	});
+});
+
 export default workspacesRoute;

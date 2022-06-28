@@ -58,7 +58,8 @@ async function showProperties() {
 
 	const html = workspaces.data.map((item) => {
 		const wImages = item.imagesIDs.map((img) => images.data.find((imgf) => imgf.ImageID === img).image_URL);
-
+		console.log("clo: ", item);
+		console.log("clo: ", item.WorkspaceID);
 		return `<div>
 		<h3>${item.PropertyName} - ${convertToDollars(item.Price)}</h3>
 		<p>${item.city} ${item.PostalCode}</p>
@@ -73,8 +74,8 @@ async function showProperties() {
 				: `<div class="notImage"><i>Not Images</i></div>`
 		}
 		<div class="btns-photo">
-			<button class="modBtn" onClick="editOpen(${item.id})">Edit</button>
-			<button class="modBtn" onClick="deleteProperty(${item.id})">Delete</button>
+			<button class="modBtn" onClick="editOpen('${item.WorkspaceID}')">Edit</button>
+			<button class="modBtn" onClick="deleteProperty('${item.WorkspaceID}')">Delete</button>
 		</div>
 	</div>`;
 	});
@@ -96,65 +97,91 @@ const buildImages = function (images) {
 };
 
 const deleteProperty = (id) => {
-	const newArray = properties.filter((item) => item.id !== id);
-	properties = newArray;
-	showProperties(properties);
+	console.log("deleteProperty id", id);
+	// const newArray = properties.filter((item) => item.id !== id);
+	// properties = newArray;
+	// showProperties(properties);
 };
 
-function editOpen(){
-
-	fetch("http://localhost:4000/workspaces/create", {
-		method: "GET",
-		body: JSON.stringify({ property, city, postCode, googleMap, price, images, id: userData().id }),
-		headers: {
-			"Content-Type": "application/json"
-		}
-	})
+function editOpen(id) {
+	console.log("id:  ", id);
+	fetch(`http://localhost:4000/workspaces/byid/${id}`)
 		.then((response) => response.json())
 		.then((response) => {
 			console.log("response", response, typeof response);
-			openModal((`
-            <label for="property">Property:</label>
-            <input class="inputBox" type="text" id="property" placeholder=` + data.property + `>
-            <label for="city">City:</label>
-            <input class="inputBox" type="text" id="city" placeholder=` + data.city + `>
-            <label for="postCode">Post Code:</label>
-            <input class="inputBox" type="text" id="postCode" placeholder=` + postCode +`>
-            <label for="gMap">Google Map URL:</label>
-            <input class="inputBox" type="text" id="gMap" placeholder=` + googleMap + `>
-            <label for="price">Price:</label>
-            <input class="inputBox" type="number" id="price" placeholder=` + price + `>
-    
-            <p>You can add until four images <i>(url images only)</i></p>
-            <label for="imgUrl1">Image URL 1:</label>
-            <input class="inputBox" type="text" id="imgUrl1" placeholder=` + img1 + `>
-            <label for="imgUrl2">Image URL 2:</label>
-            <input class="inputBox" type="text" id="imgUrl2" placeholder=` + img2 + `>
-            <label for="imgUrl1">Image URL 3:</label>
-            <input class="inputBox" type="text" id="imgUrl3" placeholder=` + img3 + `>
-            <label for="imgUrl4">Image URL 4:</label>
-            <input class="inputBox" type="text" id="imgUrl4" placeholder=` + img4 + `>
-    
-            <button onclick="saveEdit()">Save</button>
-    
-        	`), 800, 500)
+			const { data } = response;
+			openModal(
+				`
+	          <label for="property">Property:</label>
+	          <input class="inputBox" type="text" id="property" placeholder=` +
+					data.PropertyName +
+					`>
+	          <label for="city">City:</label>
+	          <input class="inputBox" type="text" id="city" placeholder=` +
+					data.CityID +
+					`>
+	          <label for="postCode">Post Code:</label>
+	          <input class="inputBox" type="text" id="postCode" placeholder=` +
+					data.postCode +
+					`>
+	          <label for="gMap">Google Map URL:</label>
+	          <input class="inputBox" type="text" id="gMap" placeholder=` +
+					data.googleMap +
+					`>
+	          <label for="price">Price:</label>
+	          <input class="inputBox" type="number" id="price" placeholder=` +
+					data.price +
+					`>
+
+	          <p>You can add until four images <i>(url images only)</i></p>
+	          <label for="imgUrl1">Image URL 1:</label>
+	          <input class="inputBox" type="text" id="imgUrl1" placeholder=` +
+					data.img1 +
+					`>
+	          <label for="imgUrl2">Image URL 2:</label>
+	          <input class="inputBox" type="text" id="imgUrl2" placeholder=` +
+					data.img2 +
+					`>
+	          <label for="imgUrl1">Image URL 3:</label>
+	          <input class="inputBox" type="text" id="imgUrl3" placeholder=` +
+					data.img3 +
+					`>
+	          <label for="imgUrl4">Image URL 4:</label>
+	          <input class="inputBox" type="text" id="imgUrl4" placeholder=` +
+					data.img4 +
+					`>
+
+	          <button onclick="saveEdit('${data.WorkspaceID}')">Save</button>
+
+	      	`,
+				800,
+				500
+			);
 		})
 		.catch((err) => console.error(err));
 }
 
+function saveEdit(id) {
+	console.log("id-->", id);
 
-function saveEdit(){
-    let property = $("#property").val();
-    let city = $("#city").val();
-    let postCode = $("#postCode").val();
-    let googleMap = $("#gMap").val();
-    let price = $("#price").val();
-
-    let images = [];
-    let img1 = $("#imgUrl1").val();
-    let img2 = $("#imgUrl2").val();
-    let img3 = $("#imgUrl3").val();
-    let img4 = $("#imgUrl4").val();
-    alert("Save button is working!");
+	fetch(`http://localhost:4000/workspaces/update/${id}`, {
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ hola: "hola como estas", name: "Jorge" })
+	})
+		.then((response) => response.json())
+		.then((response) => {
+			console.log("response-->", response);
+		});
+	// let property = $("#property").val();
+	// let city = $("#city").val();
+	// let postCode = $("#postCode").val();
+	// let googleMap = $("#gMap").val();
+	// let price = $("#price").val();
+	// let images = [];
+	// let img1 = $("#imgUrl1").val();
+	// let img2 = $("#imgUrl2").val();
+	// let img3 = $("#imgUrl3").val();
+	// let img4 = $("#imgUrl4").val();
+	// alert("Save button is working!");
 }
-
