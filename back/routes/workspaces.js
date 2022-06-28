@@ -150,9 +150,10 @@ workspacesRoute.put("/update/:id", async (req, res) => {
 		table: "Workspaces",
 		fields: ["PropertyName", "CityID", "PostalCode", "GoogleMap", "Price"],
 		fieldsValue: [property, city, postCode, googleMap, price],
-		whereCondition: `WorkspaceID = ${req.params.id}`
+		whereCondition: `WorkspaceID = '${req.params.id}'`
 	});
 	images.forEach((item) => {
+		console.log("item: ", item);
 		if (item.id !== null && workspacesImages <= 4) {
 			const imgID = uuidv4();
 			queryInsert({
