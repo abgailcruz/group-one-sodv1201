@@ -65,3 +65,30 @@
 		font-family: $secondary-font;
 	}
 }
+
+.edit-form {
+	width: 400px;
+	padding: 7px;
+
+	h4 {
+		font-family: $secondary-font;
+	}
+	label {
+		font-family: $secondary-font;
+		font-size: 12px;
+	}
+	select,
+	input {
+		border: 1px solid #b6b6b6;
+		padding: 7px;
+		border-radius: 6px;
+	}
+	p {
+		font-family: $secondary-font;
+		font-size: 12px;
+		padding: 7px;
+	}
+	.addBtn {
+		margin-top: 10px;
+	}
+}
