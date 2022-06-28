@@ -73,7 +73,7 @@ async function showProperties() {
 				: `<div class="notImage"><i>Not Images</i></div>`
 		}
 		<div class="btns-photo">
-			<button class="modBtn">Edit</button>
+			<button class="modBtn" onClick="editOpen(${item.id})">Edit</button>
 			<button class="modBtn" onClick="deleteProperty(${item.id})">Delete</button>
 		</div>
 	</div>`;
@@ -100,3 +100,61 @@ const deleteProperty = (id) => {
 	properties = newArray;
 	showProperties(properties);
 };
+
+function editOpen(){
+
+	fetch("http://localhost:4000/workspaces/create", {
+		method: "GET",
+		body: JSON.stringify({ property, city, postCode, googleMap, price, images, id: userData().id }),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+		.then((response) => response.json())
+		.then((response) => {
+			console.log("response", response, typeof response);
+			openModal((`
+            <label for="property">Property:</label>
+            <input class="inputBox" type="text" id="property" placeholder=` + data.property + `>
+            <label for="city">City:</label>
+            <input class="inputBox" type="text" id="city" placeholder=` + data.city + `>
+            <label for="postCode">Post Code:</label>
+            <input class="inputBox" type="text" id="postCode" placeholder=` + postCode +`>
+            <label for="gMap">Google Map URL:</label>
+            <input class="inputBox" type="text" id="gMap" placeholder=` + googleMap + `>
+            <label for="price">Price:</label>
+            <input class="inputBox" type="number" id="price" placeholder=` + price + `>
+    
+            <p>You can add until four images <i>(url images only)</i></p>
+            <label for="imgUrl1">Image URL 1:</label>
+            <input class="inputBox" type="text" id="imgUrl1" placeholder=` + img1 + `>
+            <label for="imgUrl2">Image URL 2:</label>
+            <input class="inputBox" type="text" id="imgUrl2" placeholder=` + img2 + `>
+            <label for="imgUrl1">Image URL 3:</label>
+            <input class="inputBox" type="text" id="imgUrl3" placeholder=` + img3 + `>
+            <label for="imgUrl4">Image URL 4:</label>
+            <input class="inputBox" type="text" id="imgUrl4" placeholder=` + img4 + `>
+    
+            <button onclick="saveEdit()">Save</button>
+    
+        	`), 800, 500)
+		})
+		.catch((err) => console.error(err));
+}
+
+
+function saveEdit(){
+    let property = $("#property").val();
+    let city = $("#city").val();
+    let postCode = $("#postCode").val();
+    let googleMap = $("#gMap").val();
+    let price = $("#price").val();
+
+    let images = [];
+    let img1 = $("#imgUrl1").val();
+    let img2 = $("#imgUrl2").val();
+    let img3 = $("#imgUrl3").val();
+    let img4 = $("#imgUrl4").val();
+    alert("Save button is working!");
+}
+
