@@ -7,8 +7,7 @@ function menuLogin() {
 
 const HEADER = `<div class="header__nav">
 	<div class="header__left">
-<<<<<<< HEAD
-			<a href="/" class="header__logo">BV Workspace</a>
+		<a href="/" class="header__logo">BV Workspaces</a>
 	</div>
 	<div class="header__right">
 		<a href="/front/register.html">Register</a>
