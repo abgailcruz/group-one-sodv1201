@@ -1,6 +1,6 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
-import { queryInsert, querySelect, querySelectAsync, queryUpdate } from "../db/db.js";
+import { queryInsert, querySelect, querySelectAsync, queryUpdate, queryDelete } from "../db/db.js";
 
 const workspacesRoute = express.Router();
 
@@ -126,8 +126,8 @@ workspacesRoute.post("/create", function (req, res) {
 	});
 });
 
-workspacesRoute.get("/byid/:id", async (req, res) => {
-	const workspace = await querySelectAsync(`SELECT * FROM Workspaces WHERE WorkspaceID = '${req.params.id}'`);
+async function workspaceByID(id) {
+	const workspace = await querySelectAsync(`SELECT * FROM Workspaces WHERE WorkspaceID = '${id}'`);
 	const workspacesImages = await querySelectAsync("SELECT * FROM Workspaces_Image");
 	const images = await querySelectAsync("SELECT * FROM Images");
 	const result = workspace.map((item) => {
@@ -135,17 +135,20 @@ workspacesRoute.get("/byid/:id", async (req, res) => {
 		const newImages = imagesIDs.map((item) => images.find((img) => img.ImageID === item));
 		return { ...item, images: newImages };
 	});
+	return result[0];
+}
+
+workspacesRoute.get("/byid/:id", async (req, res) => {
+	const result = await workspaceByID(req.params.id);
 	res.json({
 		status: "ok",
-		data: result[0]
+		data: result
 	});
 });
 
 workspacesRoute.put("/update/:id", async (req, res) => {
 	const { property, city, postCode, googleMap, price, images } = req.body;
 	const workspacesImages = await querySelectAsync(`SELECT * FROM Workspaces_Image WHERE WorkspaceID = '${req.params.id}'`);
-	console.log("workspacesImages->", workspacesImages.length);
-
 	queryUpdate({
 		table: "Workspaces",
 		fields: ["PropertyName", "CityID", "PostalCode", "GoogleMap", "Price"],
@@ -153,8 +156,7 @@ workspacesRoute.put("/update/:id", async (req, res) => {
 		whereCondition: `WorkspaceID = '${req.params.id}'`
 	});
 	images.forEach((item) => {
-		console.log("item: ", item);
-		if (item.id !== null && workspacesImages <= 4) {
+		if (item.id === null && workspacesImages.length <= 4 && item.url !== "") {
 			const imgID = uuidv4();
 			queryInsert({
 				table: "Images",
@@ -181,4 +183,18 @@ workspacesRoute.put("/update/:id", async (req, res) => {
 	});
 });
 
+workspacesRoute.delete("/delete/:id", async (req, res) => {
+	const workspace = await workspaceByID(req.params.id);
+	workspace.images.forEach((img) => {
+		if (img !== undefined) {
+			queryDelete(img.ImageID, "Workspaces_Image", "ImageID");
+			queryDelete(img.ImageID, "Images", "ImageID");
+		}
+	});
+	queryDelete(req.params.id, "Workspaces", "WorkspaceID");
+	res.json({
+		status: "ok",
+		data: "work_id"
+	});
+});
 export default workspacesRoute;

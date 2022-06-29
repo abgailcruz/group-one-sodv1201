@@ -66,3 +66,27 @@
 		margin-top: 20px;
 	}
 }
+
+.detail {
+	h3 {
+		font-family: $secondary-font;
+	}
+	&__img-container {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		width: 100%;
+		row-gap: 10px;
+		column-gap: 10px;
+
+		img {
+			width: 100%;
+		}
+		.properties__image {
+			width: 200px;
+			height: 200px;
+		}
+	}
+	.soon {
+		font-family: $secondary-font;
+	}
+}
