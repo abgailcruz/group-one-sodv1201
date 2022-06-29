@@ -21,9 +21,9 @@ const paymentMethod = `CREATE TABLE IF NOT EXISTS Payment_Method (
 // Create Users table
 const users = `CREATE TABLE IF NOT EXISTS Users (
   UserID VARCHAR(250) PRIMARY KEY,
-  CityID INT REFERENCES Cities (CityID),
-  PaymentID INT REFERENCES Payment_Method (PaymentID),
-  RoleID INT REFERENCES Roles (RoleID),
+  CityID VARCHAR(250) REFERENCES Cities (CityID),
+  PaymentID VARCHAR(250) REFERENCES Payment_Method (PaymentID),
+  RoleID VARCHAR(250) REFERENCES Roles (RoleID),
   Name VARCHAR(255) NOT NULL,
   Password VARCHAR(255) NOT NULL,
   EmailAddress VARCHAR(255) NOT NULL UNIQUE,
@@ -48,18 +48,18 @@ const workspaces = `CREATE TABLE IF NOT EXISTS Workspaces (
   WorkspaceID VARCHAR(250) PRIMARY KEY,
   PropertyName varchar(50) UNIQUE,
   PropertyAddress varchar(50),
-  CityID INT REFERENCES Cities (CityID),
+  CityID VARCHAR(250) REFERENCES Cities (CityID),
   PostalCode VARCHAR(10),
   GoogleMap varchar(250),
-  TypeID INT REFERENCES Types (TypeID),
+  TypeID VARCHAR(250) REFERENCES Types (TypeID),
   Size varchar(50),
   NoOfCoworker INT,
   Parking TEXT,
   Smoking TEXT,
   DateAvailable DATETIME,
-  LeaseID INT REFERENCES Lease_team (LeaseID),
+  LeaseID VARCHAR(250) REFERENCES Lease_team (LeaseID),
   Price Money,
-  UserID INT REFERENCES Users (UserID),
+  UserID VARCHAR(250) REFERENCES Users (UserID),
   Availability TEXT,
   BookingStartDate DATETIME,
   BookingEndDate DATETIME,
@@ -69,8 +69,8 @@ const workspaces = `CREATE TABLE IF NOT EXISTS Workspaces (
 // Create Booking table
 const booking = `CREATE TABLE IF NOT EXISTS Booking(
   BookingID VARCHAR(250) PRIMARY KEY,
-  UserID INT REFERENCES Users (UserID),
-  WorkspaceID INT REFERENCES Workspaces (WorkspaceID),
+  UserID VARCHAR(250) REFERENCES Users (UserID),
+  WorkspaceID VARCHAR(250) REFERENCES Workspaces (WorkspaceID),
   BookingStartDate DATETIME,
   BookingEndDate DATETIME,
   CreationDate DATETIME
@@ -78,15 +78,15 @@ const booking = `CREATE TABLE IF NOT EXISTS Booking(
 
 // Create Images table
 const images = `CREATE TABLE IF NOT EXISTS Images(
-  ImageID INT NOT NULL PRIMARY KEY,
+  ImageID VARCHAR(250) NOT NULL PRIMARY KEY,
   image_URL VARCHAR (200) NOT NULL
 )`;
 
 // Create Workspaces_Image table
 const workspacesImage = `CREATE TABLE IF NOT EXISTS Workspaces_Image (
   Workspace_ImageID VARCHAR(250) PRIMARY KEY,
-  ImageID int REFERENCES Images(ImageID),
-  WorkspaceID int REFERENCES Workspaces (WorkspaceID) ON DELETE CASCADE
+  ImageID VARCHAR(250) REFERENCES Images(ImageID),
+  WorkspaceID VARCHAR(250) REFERENCES Workspaces (WorkspaceID) ON DELETE CASCADE
 )`;
 
 export default {

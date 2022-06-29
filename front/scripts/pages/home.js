@@ -18,22 +18,69 @@ async function buildProperties() {
 	const imagesResponse = await fetch("http://localhost:4000/workspaces/images");
 	const images = await imagesResponse.json();
 
-	const html = workspaces.data.map(
-		(item) => `	<div class="card">
+	const citiesResponse = await fetch("http://localhost:4000/catalogs/cities");
+	const cities = await citiesResponse.json();
 
-			<div
-				class="card__img"
-				style="
-					background-image: url(${images.data.find((img) => img.ImageID === item.imagesIDs[0]).image_URL});
-				"
-			></div>
-			<h1 class="card__title">${item.PropertyName}</h1>
-			<p class="card__address">${item.PostalCode}</p>
-			<p class="card__price"><span>C ${convertToDollars(item.Price)}</span> Per hour</p>
-			<button class="card__button">See detail</button>
-		</div>`
-	);
+	const html = workspaces.data.map((item) => {
+		let img;
+		if (item.imagesIDs.length > 0) {
+			img = images.data.find((img) => img.ImageID === item.imagesIDs[0]);
+		}
+		const city = cities.data.find((c) => c.CityID === item.CityID);
+		return `<div class="card">
+				<div
+					class="card__img"
+					style="
+						background-image: url(${img !== undefined && img.image_URL});
+					"
+				></div>
+				<h1 class="card__title">${item.PropertyName}</h1>
+				<p class="card__address">${city && city.CityName} ${item.PostalCode}</p>
+				<p class="card__price"><span>C ${convertToDollars(item.Price)}</span> Per hour</p>
+				<button class="card__button" onClick="openDetail('${item.WorkspaceID}')">See detail</button>
+			</div>`;
+	});
+	if (html.length === 0) {
+		return $("#card-container").append(
+			`<h2>There are currently no workspaces, register and start creating them.
+			<span style='font-size:40px;'>&#128521;</span></h2>
+			`
+		);
+	}
 	$("#card-container").append(html);
+}
+
+async function openDetail(id) {
+	console.log("id", id);
+	const response = await fetch(`http://localhost:4000/workspaces/byid/${id}`);
+	const workspace = await response.json();
+
+	const citiesResponse = await fetch("http://localhost:4000/catalogs/cities");
+	const cities = await citiesResponse.json();
+
+	const imagesModal = workspace.data.images.map((item) => item.image_URL);
+	const city = cities.data.find((item) => item.CityID === workspace.data.CityID);
+	openModal(
+		`<div class="detail">
+	<h1>${workspace.data.PropertyName}</h1>
+	<div class="detail__img-container">
+	${buildImages(imagesModal)}
+	</div>
+	<h3>${city.CityName} ${workspace.data.PostalCode}</h3>
+	<h1>${convertToDollars(workspace.data.Price)}</h1>
+	<div>
+		<button class="addBtn" onClick="booking()">Booking</button>
+		<span class="soon" style="display:none;">due to lack of time I am pending</span>
+		<span class="soon" style='font-size:24px; display:none;'>&#128532;</span>
+	</div>
+</div>`,
+		400,
+		835
+	);
+}
+
+function booking() {
+	$(".soon").show();
 }
 
 buildProperties();

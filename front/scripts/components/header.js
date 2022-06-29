@@ -1,13 +1,13 @@
 function menuLogin() {
 	if (localStorage.getItem("loginWorkspace")) {
-		return '<a href="/front/user-profile.html">Perfil</a>';
+		return '<a href="/front/user-profile.html">Profile</a>';
 	}
 	return '<a href="/front/login.html">Login</a>';
 }
 
 const HEADER = `<div class="header__nav">
 	<div class="header__left">
-			<a href="/" class="header__logo">BV Workspance</a>
+			<a href="/front" class="header__logo">BV Workspance</a>
 	</div>
 	<div class="header__right">
 		<a href="/front/register.html">Register</a>

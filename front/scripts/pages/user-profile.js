@@ -43,8 +43,9 @@ function addNew() {
 	})
 		.then((response) => response.json())
 		.then((response) => {
-			console.log("response", response, typeof response);
-			showProperties();
+			if (response.status === "ok") {
+				window.location.href = "/front/user-profile.html";
+			}
 		})
 		.catch((err) => console.error(err));
 }
@@ -56,13 +57,18 @@ async function showProperties() {
 	const imagesResponse = await fetch("http://localhost:4000/workspaces/images");
 	const images = await imagesResponse.json();
 
+	const citiesResponse = await fetch("http://localhost:4000/catalogs/cities");
+	const cities = await citiesResponse.json();
+
 	const html = workspaces.data.map((item) => {
-		const wImages = item.imagesIDs.map((img) => images.data.find((imgf) => imgf.ImageID === img).image_URL);
-		console.log("clo: ", item);
-		console.log("clo: ", item.WorkspaceID);
+		const wImages = item.imagesIDs.map((img) => {
+			const imgFounded = images.data.find((imgf) => imgf.ImageID === img);
+			return imgFounded ? imgFounded.image_URL : null;
+		});
+		const city = cities.data.find((c) => c.CityID === item.CityID);
 		return `<div>
 		<h3>${item.PropertyName} - ${convertToDollars(item.Price)}</h3>
-		<p>${item.city} ${item.PostalCode}</p>
+		<p> ${city && city.CityName} ${item.PostalCode}</p>
 		${
 			item.imagesIDs.length > 0
 				? `
@@ -75,33 +81,12 @@ async function showProperties() {
 		}
 		<div class="btns-photo">
 			<button class="modBtn" onClick="editOpen('${item.WorkspaceID}')">Edit</button>
-			<button class="modBtn" onClick="deleteProperty('${item.WorkspaceID}')">Delete</button>
+			<button class="modBtn" onClick="deleteWorkspace('${item.WorkspaceID}')">Delete</button>
 		</div>
 	</div>`;
 	});
 	$("#properties").append(html);
 }
-
-const buildImages = function (images) {
-	return images
-		.map(
-			(item) => `<div
-			class="properties__image"
-			style="
-				background-image: url('${item}');
-			"
-		></div>`
-		)
-		.flat()
-		.join("");
-};
-
-const deleteProperty = (id) => {
-	console.log("deleteProperty id", id);
-	// const newArray = properties.filter((item) => item.id !== id);
-	// properties = newArray;
-	// showProperties(properties);
-};
 
 function editOpen(id) {
 	fetch(`http://localhost:4000/workspaces/byid/${id}`)
@@ -197,6 +182,21 @@ function saveEdit(id) {
 	})
 		.then((response) => response.json())
 		.then((response) => {
-			console.log("response-->", response);
+			if (response.status === "ok") {
+				window.location.href = "/front/user-profile.html";
+			}
+		});
+}
+
+function deleteWorkspace(id) {
+	console.log(id);
+	fetch(`http://localhost:4000/workspaces/delete/${id}`, {
+		method: "DELETE"
+	})
+		.then((response) => response.json())
+		.then((response) => {
+			if (response.status === "ok") {
+				window.location.href = "/front/user-profile.html";
+			}
 		});
 }

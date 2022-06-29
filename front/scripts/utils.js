@@ -27,3 +27,17 @@ function userData() {
 	const user = localStorage.getItem("loginWorkspace");
 	return JSON.parse(user);
 }
+
+function buildImages(images) {
+	return images
+		.map(
+			(item) => `<div
+			class="properties__image"
+			style="
+				background-image: url('${item}');
+			"
+		></div>`
+		)
+		.flat()
+		.join("");
+}

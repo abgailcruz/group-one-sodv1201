@@ -263,6 +263,34 @@
   color: #0084ff;
 }
 
+.detail h3 {
+  font-family: "Poppins", sans-serif;
+}
+
+.detail__img-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+  width: 100%;
+  row-gap: 10px;
+  -webkit-column-gap: 10px;
+          column-gap: 10px;
+}
+
+.detail__img-container img {
+  width: 100%;
+}
+
+.detail__img-container .properties__image {
+  width: 200px;
+  height: 200px;
+}
+
+.detail .soon {
+  font-family: "Poppins", sans-serif;
+}
+
 .section-login {
   width: 1000px;
   margin: auto;

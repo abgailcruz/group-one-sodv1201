@@ -79,8 +79,6 @@ export function queryUpdate(props) {
 	const { table, fields, fieldsValue, whereCondition } = props;
 	const values = fields.map((item) => `${item} = ?`).join(", ");
 	const sql = `UPDATE ${table} SET ${values} WHERE ${whereCondition}`;
-	console.log("fieldsValue", fieldsValue);
-	console.log("sql", sql);
 	db.run(sql, fieldsValue, (err) => {
 		if (err) return console.error(err.message);
 		return "queryUpdate done";
@@ -103,6 +101,15 @@ export async function querySelectAsync(query) {
 			}
 			resolve(rows);
 		});
+	});
+}
+
+export function queryDelete(id, table, conditionParam) {
+	const sql = `DELETE FROM ${table} WHERE ${conditionParam} = ?`;
+	db.run(sql, `${id}`, function (err) {
+		if (err) {
+			return console.error(err.message);
+		}
 	});
 }
 
