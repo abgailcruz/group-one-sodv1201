@@ -1,6 +1,11 @@
+function signOff() {
+	window.localStorage.removeItem("loginWorkspace");
+	window.location.href = "/front/login.html";
+}
+
 function menuLogin() {
 	if (localStorage.getItem("loginWorkspace")) {
-		return '<a href="/front/user-profile.html">Profile</a>';
+		return '<a href="/front/user-profile.html">Profile</a> <button class="btn-sign-off" onClick="signOff()">Sign off</button>';
 	}
 	return '<a href="/front/login.html">Login</a>';
 }

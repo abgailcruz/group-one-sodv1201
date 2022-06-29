@@ -20,6 +20,16 @@
 		font-size: 20px !important;
 		font-weight: bold;
 	}
+
+	.btn-sign-off {
+		background: transparent;
+		border: none;
+		color: #0b3862;
+		cursor: pointer;
+		&:hover {
+			color: #f6ff00;
+		}
+	}
 }
 
 .message-error {
