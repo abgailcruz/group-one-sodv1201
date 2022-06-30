@@ -28,6 +28,7 @@
 		<!-- Styles: -->
 		<link rel="stylesheet" href="./styles/styles.css" />
 
+		<!-- Validates the key from the local storage containing the user data. If the key does not exist, access to this page is prohibited.  -->
 		<script>
 			if (!localStorage.getItem("loginWorkspace")) {
 				window.location.href = "/front/login.html";
