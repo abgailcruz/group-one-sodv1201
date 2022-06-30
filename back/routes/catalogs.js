@@ -1,6 +1,10 @@
+//Modules are loaded
+//The uuidv4 module generates ID's automatically.
+
 import express from "express";
 import { querySelect } from "../db/db.js";
 
+//middleware
 const catalogsRoute = express.Router();
 
 /**

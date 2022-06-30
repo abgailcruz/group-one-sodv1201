@@ -1,12 +1,17 @@
+
+//Modules are loaded
+//The uuidv4 module generates ID's automatically.
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 import { queryInsert, querySelect, querySelectAsync, queryUpdate, queryDelete } from "../db/db.js";
 
+//middlewares express.Router().
 const workspacesRoute = express.Router();
 
 /**
  * Method: GET
  * To get all workspaces
+ * End-point to see all Workspaces created.
  */
 workspacesRoute.get("/all", async (req, res) => {
 	const workspaces = await querySelectAsync("SELECT * FROM Workspaces");
@@ -24,7 +29,8 @@ workspacesRoute.get("/all", async (req, res) => {
 
 /**
  * Method: GET
- * To get all workspaces by user
+ * To get the properties for a specific user.
+ * End point to see the workspace by an user.
  */
 workspacesRoute.get("/byuser/:id", async (req, res) => {
 	const workspaces = await querySelectAsync(`SELECT * FROM Workspaces WHERE UserID = '${req.params.id}'`);
@@ -55,7 +61,7 @@ workspacesRoute.get("/images", (req, res) => {
 
 /**
  * Method: POST
- * Create a workspace
+ * Create a workspace with all their attributes.
  */
 workspacesRoute.post("/create", function (req, res) {
 	const { property, city, postCode, googleMap, price, images, id } = req.body;
@@ -126,6 +132,7 @@ workspacesRoute.post("/create", function (req, res) {
 	});
 });
 
+// Function that Select the workspaces by ID.
 async function workspaceByID(id) {
 	const workspace = await querySelectAsync(`SELECT * FROM Workspaces WHERE WorkspaceID = '${id}'`);
 	const workspacesImages = await querySelectAsync("SELECT * FROM Workspaces_Image");
@@ -138,6 +145,7 @@ async function workspaceByID(id) {
 	return result[0];
 }
 
+
 workspacesRoute.get("/byid/:id", async (req, res) => {
 	const result = await workspaceByID(req.params.id);
 	res.json({
@@ -145,6 +153,12 @@ workspacesRoute.get("/byid/:id", async (req, res) => {
 		data: result
 	});
 });
+
+/**
+ * Method: PUT
+ * To update the workspaces by an ID.
+ * End point to update the workspace by an ID. .
+ */
 
 workspacesRoute.put("/update/:id", async (req, res) => {
 	const { property, city, postCode, googleMap, price, images } = req.body;
@@ -182,6 +196,12 @@ workspacesRoute.put("/update/:id", async (req, res) => {
 		data: "data updated successfully"
 	});
 });
+
+/**
+ * Method: DELETE
+ * To delete a workspace by ID.
+ * End point to delete a workspace by ID.
+ */
 
 workspacesRoute.delete("/delete/:id", async (req, res) => {
 	const workspace = await workspaceByID(req.params.id);
