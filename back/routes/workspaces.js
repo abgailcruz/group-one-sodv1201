@@ -194,7 +194,7 @@ workspacesRoute.delete("/delete/:id", async (req, res) => {
 	queryDelete(req.params.id, "Workspaces", "WorkspaceID");
 	res.json({
 		status: "ok",
-		data: "work_id"
+		data: "Workspace deleted!"
 	});
 });
 export default workspacesRoute;

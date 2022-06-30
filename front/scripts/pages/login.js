@@ -35,14 +35,17 @@ function login(data) {
 	})
 		.then((response) => response.json())
 		.then((response) => {
-			console.log("response", response);
 			if (response.status === "error") {
 				openErrors(response.message);
 				return;
 			}
 			localStorage.setItem("loginWorkspace", JSON.stringify(response.data));
 			if (localStorage.getItem("loginWorkspace")) {
-				window.location.href = "/front/user-profile.html";
+				if (response.data.role === "Owner") {
+					window.location.href = "/front/user-profile.html";
+				} else if (response.data.role === "Coworker") {
+					window.location.href = "/front/user-profile-regular.html";
+				}
 			}
 		})
 		.catch((err) => console.error(err));

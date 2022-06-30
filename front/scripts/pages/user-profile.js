@@ -92,7 +92,6 @@ function editOpen(id) {
 	fetch(`http://localhost:4000/workspaces/byid/${id}`)
 		.then((response) => response.json())
 		.then((response) => {
-			console.log("response", response, typeof response);
 			const { data } = response;
 			openModal(
 				`
@@ -123,7 +122,7 @@ function editOpen(id) {
 	          <label for="imgUrl4">Image URL 4:</label>
 	          <input class="inputBox" type="text" id="imgUrl4Edit" value="${data.images[3] ? data.images[3].image_URL : ""}">
 						<input type="hidden" id="imghidden3" value="${data.images[3] ? data.images[3].ImageID : ""}">
-	          <button class="addBtn" onclick="saveEdit('${data.WorkspaceID}')">Save</button>
+	          <button class="addBtn" onclick="updateData('${data.WorkspaceID}')">Update</button>
 					<div>
 	      	`,
 				630,
@@ -134,7 +133,7 @@ function editOpen(id) {
 		.catch((err) => console.error(err));
 }
 
-function saveEdit(id) {
+function updateData(id) {
 	const property = $("#propertyEdit").val();
 	const city = $("#cityEdit").val();
 	const postCode = $("#postCodeEdit").val();

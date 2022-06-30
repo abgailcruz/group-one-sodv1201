@@ -51,7 +51,6 @@ async function buildProperties() {
 }
 
 async function openDetail(id) {
-	console.log("id", id);
 	const response = await fetch(`http://localhost:4000/workspaces/byid/${id}`);
 	const workspace = await response.json();
 

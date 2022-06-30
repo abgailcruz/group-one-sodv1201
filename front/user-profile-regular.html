@@ -18,34 +18,31 @@
 			referrerpolicy="no-referrer"
 		></script>
 		<link rel="stylesheet" href="./styles/styles.css" />
+		<script>
+			if (!localStorage.getItem("loginWorkspace")) {
+				window.location.href = "/front/login.html";
+			}
+		</script>
 	</head>
 	<body>
 		<div id="modal"></div>
 		<header id="header" class="header"></header>
 
-		<!-- Components example container -->
-		<!-- section-components is convension you need to use the same but with your main class -->
-		<section class="section-components-example">
-			<p>Example how to make a form</p>
-			<div class="section-components-example__form">
-				<div class="section-components-example__form-two-columns">
-					<input type="text" placeholder="Name" id="name" />
-					<input type="text" placeholder="Last name" id="lastName" />
-				</div>
-				<div class="section-components-example__form-one-column">
-					<input type="text" placeholder="Name" id="name" />
-					
-				</div>
-				<button id="components-example-button" class="section-components-example__form-button">Sign up to be a Bear Cleaner</button>
+		<!-- User Profile container -->
+		<div class="container">
+			<div class="col">
+				<h3>You are a regular user, I am sorry but you cannot make workspaces</h3>
+				<span style="font-size: 100px">&#128546;</span>
 			</div>
-		</section>
-		<!-- Finish Components example container -->
+		</div>
+		<!-- Finish User Profile container -->
 
 		<footer class="footer" id="footer"></footer>
+		<script src="./scripts/utils.js"></script>
 		<script src="./scripts/components/header.js"></script>
 		<script src="./scripts/components/footer.js"></script>
 		<script src="./scripts/components/modal.js"></script>
 		<script src="./scripts/components/errors.js"></script>
-		<script src="./scripts/pages/components-example.js"></script>
+		<script src="./scripts/pages/user-profile.js"></script>
 	</body>
 </html>

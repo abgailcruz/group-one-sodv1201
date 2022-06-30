@@ -53,7 +53,6 @@ db.serialize(() => {
 		})
 	);
 
-	// INSERT MASTER USER
 	querySelect("SELECT * FROM Roles", (roles) => {
 		let role = JSON.parse(roles).find((item) => item.RoleName === "Master");
 		queryInsert({
