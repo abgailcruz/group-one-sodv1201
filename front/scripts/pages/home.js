@@ -4,19 +4,21 @@
  * @authors: Abigail Cruz, Debora Salles Antunes, Jorge Alberto Hurtado Ortega, Maria Estrella
  */
 
+// Function to Sort the properties based on either by name or by price.
 function sortBy(field) {
 	const propertiesFilters = properties.sort((a, b) => {
-		// it is validated if the field is a number or a string
+		// Validation if the field is a number or a string
 		let fieldA = typeof a[field] ? a[field] : a[field].toLowerCase(),
 			fieldB = typeof b[field] ? b[field] : b[field].toLowerCase();
 		if (fieldA < fieldB) return -1;
 		if (fieldA > fieldB) return 1;
-		return 0; //default return value (no sorting)
+		return 0; // Default return value (no sorting)
 	});
 	$("#card-container").empty();
 	buildProperties(propertiesFilters);
 }
 
+// Function to show the properties in the home page
 async function buildProperties() {
 	const workspacesResponse = await fetch("http://localhost:4000/workspaces/all");
 	const workspaces = await workspacesResponse.json();
