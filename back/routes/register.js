@@ -1,7 +1,11 @@
+//Modules are loaded
+//The uuidv4 module generates ID's automatically.
+
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 import db, { queryInsert, querySelect } from "../db/db.js";
 
+//middleware
 const registersRoute = express.Router();
 
 /**
@@ -45,7 +49,7 @@ registersRoute.post("/create", function (req, res) {
 
 /**
  * Method: GET
- * To get all registers
+ * To get all the users registered
  */
 registersRoute.get("/users", (req, res) => {
 	querySelect("SELECT * FROM Users", (users) => {
