@@ -1,9 +1,15 @@
+//Modules are loaded
+//Import module sqlite3
+//Import tables.js
+
 import sqlite3 from "sqlite3";
 import tables from "./tables.js";
 import { v4 as uuidv4 } from "uuid";
 
 // Read or Create database
 const db = new sqlite3.Database("./workspace.db", sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => err && console.error(err));
+
+//Method serialize, tu execute all the of tables.js
 
 db.serialize(() => {
 	db.run(tables.rolesTable);
@@ -53,6 +59,7 @@ db.serialize(() => {
 		})
 	);
 
+	// function that assign the role.
 	querySelect("SELECT * FROM Roles", (roles) => {
 		let role = JSON.parse(roles).find((item) => item.RoleName === "Master");
 		queryInsert({
@@ -63,6 +70,7 @@ db.serialize(() => {
 	});
 });
 
+//function that insert attributes.
 export function queryInsert(props) {
 	const { table, columns, columnsValue } = props;
 	const values = columns.map((item) => "?").join(", ");
@@ -74,6 +82,7 @@ export function queryInsert(props) {
 	});
 }
 
+//function that update attributes.
 export function queryUpdate(props) {
 	const { table, fields, fieldsValue, whereCondition } = props;
 	const values = fields.map((item) => `${item} = ?`).join(", ");
@@ -103,6 +112,7 @@ export async function querySelectAsync(query) {
 	});
 }
 
+//function that update attributes.
 export function queryDelete(id, table, conditionParam) {
 	const sql = `DELETE FROM ${table} WHERE ${conditionParam} = ?`;
 	db.run(sql, `${id}`, function (err) {
