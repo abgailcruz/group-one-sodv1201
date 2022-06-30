@@ -38,7 +38,11 @@
 .header .btn-sign-off {
   background: transparent;
   border: none;
-  color: #0b3862;
+  color: white;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  padding: 5px 15px;
   cursor: pointer;
 }
 

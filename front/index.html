@@ -5,27 +5,35 @@
 	  
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Group Project</title>
+		<title>Home</title>
+		<!-- Font Source: -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;0,900;1,300&family=Poppins:wght@100;200;400;600&display=swap"
 			rel="stylesheet"
 		/>
+		<!-- jQuery: -->
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
 			integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		></script>
+		<!-- Styles: -->
 		<link rel="stylesheet" href="./styles/styles.css" />
 	</head>
+
 	<body>
+		<!-- Modal Component -->
 		<div id="modal"></div>
+
+		<!-- Header Component -->
 		<header id="header" class="header"></header>
 
 		<!-- Home container -->
@@ -40,16 +48,23 @@
 					<img src="./assets/icon-search.png" />
 				</button>
 			</div>
-			<div class="section-home__card-container" id="card-container"></div>
+			<div class="section-home__card-container" id="card-container">
+				<!-- The available properties are displayed here. -->
+			</div>
 		</section>
 		<!-- Finish home container -->
 
+		<!-- Footer Component -->
 		<footer class="footer" id="footer"></footer>
+
+		<!-- Script Sources: -->
 		<script src="./scripts/utils.js"></script>
 		<script src="./scripts/components/header.js"></script>
 		<script src="./scripts/components/footer.js"></script>
 		<script src="./scripts/components/modal.js"></script>
 		<script src="./scripts/components/errors.js"></script>
 		<script src="./scripts/pages/home.js"></script>
+
 	</body>
+	
 </html>

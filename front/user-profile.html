@@ -3,44 +3,60 @@
       @class: Introduction to Web Programming 
       @authors: Abigail Cruz, Debora Salles Antunes, Jorge Alberto Hurtado Ortega, Maria Estrella -->
 
+<!-- This is the HTML file for the Owner -->
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Group Project</title>
+		<title>Owner Page</title>
+		<!-- Font Source: -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;0,800;0,900;1,300&family=Poppins:wght@100;200;400;600&display=swap"
 			rel="stylesheet"
 		/>
+		<!-- jQuery: -->
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
 			integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		></script>
+		<!-- Styles: -->
 		<link rel="stylesheet" href="./styles/styles.css" />
+
 		<script>
 			if (!localStorage.getItem("loginWorkspace")) {
 				window.location.href = "/front/login.html";
 			}
 		</script>
+		
 	</head>
+
 	<body>
+		<!-- Modal Component -->
 		<div id="modal"></div>
+
+		<!-- Header Component -->
 		<header id="header" class="header"></header>
 
 		<!-- User Profile container -->
 		<div class="container">
 			<div class="col">
 				<h3>Add property</h3>
+
+				<!-- Input boxes for the required property details -->
 				<input class="inputBox" type="text" placeholder="Property Name" id="property" />
+				
+				<!-- Drop-down box to select the city -->
 				<select class="inputBox" placeholder="City" id="city">
 					<option>Select city</option>
 				</select>
+
+				<!-- Input boxes for the required property details -->
 				<input class="inputBox" type="text" placeholder="Post Code" id="postCode" />
 				<input class="inputBox" type="text" placeholder="Add Google Maps URL" id="gMap" />
 				<input class="inputBox" type="number" placeholder="Price" id="price" />
@@ -49,22 +65,32 @@
 				<input class="inputBox" type="text" placeholder="Image URL 2" id="imgUrl2" />
 				<input class="inputBox" type="text" placeholder="Image URL 3" id="imgUrl3" />
 				<input class="inputBox" type="text" placeholder="Image URL 4" id="imgUrl4" />
-
+				
+				<!-- Button to validate the user input details: -->
 				<button class="addBtn" id="addBtn">Add property</button>
 			</div>
+
 			<div class="col">
 				<h3>Current properties</h3>
-				<div id="properties" class="properties"></div>
+				<div id="properties" class="properties">
+					<!-- A section that shows all of the Owner's properties that were entered earlier. -->
+				</div>
 			</div>
+
 		</div>
 		<!-- Finish User Profile container -->
 
+		<!-- Footer Component -->
 		<footer class="footer" id="footer"></footer>
+
+		<!-- Script Sources: -->
 		<script src="./scripts/utils.js"></script>
 		<script src="./scripts/components/header.js"></script>
 		<script src="./scripts/components/footer.js"></script>
 		<script src="./scripts/components/modal.js"></script>
 		<script src="./scripts/components/errors.js"></script>
 		<script src="./scripts/pages/user-profile.js"></script>
+
 	</body>
+
 </html>
