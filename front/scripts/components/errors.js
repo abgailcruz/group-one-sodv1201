@@ -4,6 +4,7 @@
  * @authors: Abigail Cruz, Debora Salles Antunes, Jorge Alberto Hurtado Ortega, Maria Estrella
  */
 
+// This is the error components that appears whenever there are errors. For example, invalid input from the user.
 const openErrors = (text) => {
 	$("#errors").show();
 	$("#errors").html(text);

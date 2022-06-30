@@ -19,6 +19,8 @@ function signOff() {
  * Logged in: Will show the Profile and the Logout Button.
  * Else: Will show the login button.
  */
+
+// Function for the menu display if the user is logged in:
 function menuLogin() {
 	if (localStorage.getItem("loginWorkspace")) {
 		return '<a href="/front/user-profile.html">Profile</a><button class="btn-sign-off" onClick="signOff()">Logout</button>';
