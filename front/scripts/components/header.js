@@ -12,7 +12,7 @@ function menuLogin() {
 
 const HEADER = `<div class="header__nav">
 	<div class="header__left">
-			<a href="/front" class="header__logo">BV Workspance</a>
+		<a href="/" class="header__logo">BV Workspaces</a>
 	</div>
 	<div class="header__right">
 		<a href="/front/register.html">Register</a>
