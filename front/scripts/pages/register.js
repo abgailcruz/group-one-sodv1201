@@ -4,11 +4,13 @@
  * @authors: Abigail Cruz, Debora Salles Antunes, Jorge Alberto Hurtado Ortega, Maria Estrella
  */
 
+// Execute upon browser load, for new user registrations
 $(document).ready(function () {
 	$("#register-button").click(addNewRegister);
 	getCities("#city");
 });
 
+// Function to add the registration
 function addNewRegister() {
 	closeErrors();
 	let name = $("#name").val();
@@ -40,6 +42,7 @@ function addNewRegister() {
 	openModal("<p>Successful registration<p>", 100, 300);
 }
 
+// Function to save the information in the endpoint
 function saveData(data) {
 	fetch("http://localhost:4000/registers/create", {
 		method: "POST",

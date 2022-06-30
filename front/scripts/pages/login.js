@@ -4,8 +4,7 @@
  * @authors: Abigail Cruz, Debora Salles Antunes, Jorge Alberto Hurtado Ortega, Maria Estrella
  */
 
-var booleana = false;
-
+// When the document is loaded, we make btn1 event. This executes on an onclick event.
 $(document).ready(function () {
 	$("#btn1").click(function () {
 		var email = document.getElementById("email").value;
@@ -31,6 +30,7 @@ $(document).ready(function () {
 	});
 });
 
+// Function to send information to the endpoint login and make a login request.
 function login(data) {
 	fetch("http://localhost:4000/login", {
 		method: "POST",

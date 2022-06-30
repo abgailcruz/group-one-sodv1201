@@ -14,10 +14,12 @@ const formatter = new Intl.NumberFormat("en-US", {
 	minimumFractionDigits: 2
 });
 
+// Function to convert the integer to an amount, here in Dollars / money format
 function convertToDollars(amount) {
 	return formatter.format(amount);
 }
 
+// Function to get city names from the database, and insert in the select as an option.
 function getCities(id, defaultID) {
 	fetch("http://localhost:4000/catalogs/cities")
 		.then((response) => response.json())
@@ -29,11 +31,13 @@ function getCities(id, defaultID) {
 		.catch((err) => console.error(err));
 }
 
+// Function to get the information from the local storage
 function userData() {
 	const user = localStorage.getItem("loginWorkspace");
 	return JSON.parse(user);
 }
 
+// Function to build the images
 function buildImages(images) {
 	return images
 		.map(

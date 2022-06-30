@@ -4,12 +4,14 @@
  * @authors: Abigail Cruz, Debora Salles Antunes, Jorge Alberto Hurtado Ortega, Maria Estrella
  */
 
+// Executes upon browser load, for adding a new property
 $(document).ready(function () {
 	$("#addBtn").click(addNew);
 	getCities("#city");
 	showProperties();
 });
 
+// Function to add a new workspace
 function addNew() {
 	let property = $("#property").val();
 	let city = $("#city").val();
@@ -40,6 +42,7 @@ function addNew() {
 		return;
 	}
 
+	// Function to send the data to the endpoint to create a new workspace
 	fetch("http://localhost:4000/workspaces/create", {
 		method: "POST",
 		body: JSON.stringify({ property, city, postCode, googleMap, price, images, id: userData().id }),
@@ -56,6 +59,7 @@ function addNew() {
 		.catch((err) => console.error(err));
 }
 
+// Function to show the properties in the User Profile
 async function showProperties() {
 	const workspacesResponse = await fetch(`http://localhost:4000/workspaces/byuser/${userData().id}`);
 	const workspaces = await workspacesResponse.json();
@@ -94,6 +98,7 @@ async function showProperties() {
 	$("#properties").append(html);
 }
 
+// Function to Edit some workspace details, by ID
 function editOpen(id) {
 	fetch(`http://localhost:4000/workspaces/byid/${id}`)
 		.then((response) => response.json())
@@ -139,6 +144,7 @@ function editOpen(id) {
 		.catch((err) => console.error(err));
 }
 
+// Function to update the edited workspace, by ID
 function updateData(id) {
 	const property = $("#propertyEdit").val();
 	const city = $("#cityEdit").val();
@@ -180,6 +186,7 @@ function updateData(id) {
 			}
 		]
 	};
+	// To send the information to the endpoint
 	fetch(`http://localhost:4000/workspaces/update/${id}`, {
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
@@ -193,6 +200,7 @@ function updateData(id) {
 		});
 }
 
+// Function to delete a workspace
 function deleteWorkspace(id) {
 	console.log(id);
 	fetch(`http://localhost:4000/workspaces/delete/${id}`, {

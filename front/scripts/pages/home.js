@@ -58,6 +58,7 @@ async function buildProperties() {
 	$("#card-container").append(html);
 }
 
+// Function to make the details contained in the modal 
 async function openDetail(id) {
 	const response = await fetch(`http://localhost:4000/workspaces/byid/${id}`);
 	const workspace = await response.json();
@@ -86,8 +87,10 @@ async function openDetail(id) {
 	);
 }
 
+// Function to make the booking
 function booking() {
 	$(".soon").show();
 }
 
+// To call the function when the browser loads
 buildProperties();
