@@ -1,3 +1,9 @@
+/* @name: Course Project: Shared Workspace Web App
+ * @Course Code: SODV1201 - 22MAYMNOT4
+ * @class: Introduction to Web Programming 
+ * @authors: Abigail Cruz, Debora Salles Antunes, Jorge Alberto Hurtado Ortega, Maria Estrella
+ */
+
 //**Application is defined and started**
 //Imports modules
 
