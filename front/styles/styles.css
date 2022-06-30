@@ -30,6 +30,17 @@
   font-weight: bold;
 }
 
+.header .btn-sign-off {
+  background: transparent;
+  border: none;
+  color: #0b3862;
+  cursor: pointer;
+}
+
+.header .btn-sign-off:hover {
+  color: #f6ff00;
+}
+
 .message-error {
   background-color: rgba(250, 115, 149, 0.5);
   font-family: "Overpass", sans-serif;
